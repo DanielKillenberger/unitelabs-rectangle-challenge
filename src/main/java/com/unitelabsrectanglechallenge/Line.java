@@ -8,7 +8,6 @@ public class Line {
         this.p2 = p2;
     }
 
-
     /**
      * @param point
      * @return -1 for point being on one side of the line and 1 for the other.

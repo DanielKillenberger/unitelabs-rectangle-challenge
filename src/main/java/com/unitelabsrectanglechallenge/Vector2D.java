@@ -3,7 +3,6 @@ package com.unitelabsrectanglechallenge;
 public class Vector2D {
     public final int X, Y;
 
-
     public Vector2D(int X, int Y) {
         this.X = X;
         this.Y = Y;

@@ -10,7 +10,6 @@ class LineTest {
 
     @Test
     void IsPointOnLine_When_PointOnLine_Expect_0() {
-
         Line line = new Line(origin, new Vector2D(2, 2));
         assertEquals(0, line.isPointOnLine(new Vector2D(-1, -1)));
         assertEquals(0, line.isPointOnLine(new Vector2D(0, 0)));
