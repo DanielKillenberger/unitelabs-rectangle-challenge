@@ -21,10 +21,8 @@ class Rectangle {
         final Line rightLine = new Line(topRightCorner, bottomRightCorner);
 
         return (topLine.isPointOnLine(point) == 1 &&
-            leftLine.isPointOnLine(point) == 1 &&
-            bottomLine.isPointOnLine(point) == -1 &&
-            rightLine.isPointOnLine(point) == -1);
+                leftLine.isPointOnLine(point) == 1 &&
+                bottomLine.isPointOnLine(point) == -1 &&
+                rightLine.isPointOnLine(point) == -1);
     }
-
-
 }
