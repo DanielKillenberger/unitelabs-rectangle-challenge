@@ -5,6 +5,15 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
 class RectangleTest {
+    @Test
+    void GetOtherCornerPoints() {
+        Rectangle rec = new Rectangle(new Vector2D(0, 0), 3, 3);
+        //Check if in counterclockwise order
+        Vector2D[] otherCornerPoints = rec.getOtherCornerPoints();
+        assertEquals(otherCornerPoints[0], new Vector2D(0, 3));
+        assertEquals(otherCornerPoints[1], new Vector2D(3, 3));
+        assertEquals(otherCornerPoints[2], new Vector2D(3, 0));
+    }
 
     @Test
     void IsPointInRectangle_WhenPointInRectangle_Expect_True() {
