@@ -8,6 +8,24 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class RectangleTest {
     @Test
+    void CalculateRectangleFromIntersection_TopLeftCornerInRectangle_Expect_OriginAtTopleftCorner() {
+        Rectangle rec = new Rectangle(new Vector2D(0, 0), 2, 2);
+        Rectangle rec2 = new Rectangle(new Vector2D(1, 1), 2, 2);
+
+        Rectangle rec_expected = new Rectangle(new Vector2D(1,1), 1,1);
+        assertEquals(rec_expected, Rectangle.calculateIntersection(rec, rec2));
+    }
+
+    @Test
+    void CalculateRectangleFromIntersection_OneRectangleContainsOtherRectangle_Expect_OtherRectangle() {
+        Rectangle rec = new Rectangle(new Vector2D(0, 0), 4, 4);
+        Rectangle rec2 = new Rectangle(new Vector2D(1, 1), 2, 2);
+
+        assertEquals(rec2, Rectangle.calculateIntersection(rec, rec2));
+        assertEquals(rec2, Rectangle.calculateIntersection(rec2, rec));
+    }
+
+    @Test
     void GetOtherCornerPoints() {
         Rectangle rec = new Rectangle(new Vector2D(0, 0), 3, 3);
         //Check if in counterclockwise order
