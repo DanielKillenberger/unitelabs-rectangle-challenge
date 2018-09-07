@@ -1,5 +1,6 @@
 package com.unitelabsrectanglechallenge;
 
+import java.util.InvalidPropertiesFormatException;
 import java.util.Objects;
 
 class Line {
@@ -8,6 +9,54 @@ class Line {
     Line(Vector2D p1, Vector2D p2) {
         this.p1 = p1;
         this.p2 = p2;
+    }
+
+    static Vector2D calculateIntersection(Line line1, Line line2) throws InvalidPropertiesFormatException {
+        /*
+        Check if lines are parallel to axis
+        This intersection calculation won't work otherwise => throw error
+         */
+        if(
+            line1.p1.X != line1.p2.X && line1.p1.Y != line1.p2.Y ||
+            line2.p1.X != line2.p2.X && line2.p1.Y != line2.p2.Y) {
+            throw new InvalidPropertiesFormatException("Lines need to be parallel to either axis.");
+        }
+
+        //Check if lines are parallel
+        if (
+            line1.p1.X == line1.p2.X && line2.p1.X == line2.p2.X ||
+            line1.p1.Y == line1.p2.Y && line2.p1.Y == line2.p2.Y) {
+            return null;
+        }
+
+        //Line1 is horizontal => line2 is vertical as they are not parallel but aligned with axis
+        if(line1.p1.X == line1.p2.X) {
+
+            //Form potential intersecting point
+            int X = line1.p1.X;
+            int Y = line2.p1.Y;
+
+            //Return if intersection within limits of the two lines
+            if (Math.max(line1.p1.Y, line1.p2.Y) > Y && Math.min(line1.p1.Y, line1.p2.Y) < Y &&
+                Math.max(line2.p1.X, line2.p2.X) > X && Math.min(line2.p1.X, line2.p2.X) < X) {
+                return new Vector2D(X, Y);
+            }
+        }
+        //Line1 is vertical
+
+        //Form potential intersecting point
+        int X = line2.p1.X;
+        int Y = line1.p1.Y;
+
+        //Return if intersection within limits of the two lines
+        if (Math.max(line2.p1.Y, line2.p2.Y) > Y && Math.min(line2.p1.Y, line2.p2.Y) < Y &&
+                Math.max(line1.p1.X, line1.p2.X) > X && Math.min(line1.p1.X, line1.p2.X) < X) {
+            return new Vector2D(X, Y);
+        }
+
+        // Lines don't intersect due to them being to short
+        return null;
+
     }
 
     /**
@@ -28,7 +77,7 @@ class Line {
 
     @Override
     public boolean equals(Object other) {
-        if (other == this){
+        if (other == this) {
             return true;
         }
         if (!(other instanceof Line)) {
