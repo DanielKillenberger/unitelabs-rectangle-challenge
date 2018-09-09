@@ -4,6 +4,7 @@ import java.security.InvalidParameterException;
 import java.util.LinkedList;
 import java.util.Objects;
 
+
 class Rectangle {
     final Vector2D origin;
     final int width, height;
@@ -27,6 +28,7 @@ class Rectangle {
         LinkedList<Vector2D> cornerPointsFrom1IntersectingWith2 = rectangle2.getIntersectingCornerPoints(rectangle1);
 
         LinkedList<Vector2D> cornerPointsOfContainedRectangle;
+        LinkedList<Line> linesOfSurroundingRectangle;
         Rectangle containedRectangle;
         Rectangle surroundingRectangle;
 
@@ -41,11 +43,14 @@ class Rectangle {
             cornerPointsOfContainedRectangle = cornerPointsFrom1IntersectingWith2;
             containedRectangle = rectangle1;
             surroundingRectangle = rectangle2;
+
         } else {
             cornerPointsOfContainedRectangle = cornerPointsFrom2IntersectingWith1;
             containedRectangle = rectangle2;
             surroundingRectangle = rectangle1;
         }
+
+        linesOfSurroundingRectangle = surroundingRectangle.getLines();
 
         /*
         Check if surroundingRectangle includes all the points of the containedRectangle.
@@ -63,47 +68,61 @@ class Rectangle {
         return null;
     }
 
+    LinkedList<Line> getLinesConnectedToCorner(Vector2D corner) {
+        LinkedList<Vector2D> allCorners = getCornerPoints();
+        if (!allCorners.contains(corner)) {
+            return null;
+        }
+        LinkedList<Line> lines = getLines();
+        lines.removeIf(line -> (!line.p1.equals(corner) && !line.p2.equals(corner)));
+
+        return lines;
+    }
+
 
     /**
      * @return Array of 3 non-origin corner points in counterclockwise order.
      */
-    Vector2D[] getNonOriginCornerPoints() {
-        return new Vector2D[]{
-                origin.plus(new Vector2D(0, height)),
-                origin.plus(new Vector2D(0, height)).plus(new Vector2D(width, 0)),
-                origin.plus(new Vector2D(width, 0))
-        };
+    LinkedList<Vector2D> getNonOriginCornerPoints() {
+        LinkedList<Vector2D> result = new LinkedList<>();
+
+        result.add(origin.plus(new Vector2D(0, height)));
+        result.add(origin.plus(new Vector2D(0, height)).plus(new Vector2D(width, 0)));
+        result.add(origin.plus(new Vector2D(width, 0)));
+        return result;
     }
 
     /**
      * @return Array of all corner points in counterclockwise order starting from origin.
      */
-    Vector2D[] getCornerPoints() {
-        Vector2D[] otherCornerPoints = getNonOriginCornerPoints();
-        return new Vector2D[]{origin, otherCornerPoints[0], otherCornerPoints[1], otherCornerPoints[2]};
+    LinkedList<Vector2D> getCornerPoints() {
+        LinkedList<Vector2D> cornerPoints = getNonOriginCornerPoints();
+        cornerPoints.addFirst(origin);
+        return cornerPoints;
     }
 
     /**
      * @return Array of all lines defining the rectangle in counterclockwise order starting from the left.
      */
-    Line[] getLines() {
-        Vector2D[] cornerPoints = getNonOriginCornerPoints();
+    LinkedList<Line> getLines() {
+        LinkedList<Vector2D> cornerPoints = getNonOriginCornerPoints();
 
-        final Line leftLine = new Line(origin, cornerPoints[0]);
-        final Line bottomLine = new Line(cornerPoints[0], cornerPoints[1]);
-        final Line rightLine = new Line(cornerPoints[1], cornerPoints[2]);
-        final Line topLine = new Line(origin, cornerPoints[2]);
+        LinkedList<Line> result = new LinkedList<>();
+        result.add(new Line(origin, cornerPoints.get(0)));
+        result.add(new Line(cornerPoints.get(0), cornerPoints.get(1)));
+        result.add(new Line(cornerPoints.get(1), cornerPoints.get(2)));
+        result.add(new Line(origin, cornerPoints.get(2)));
 
-        return new Line[]{leftLine, bottomLine, rightLine, topLine};
+        return result;
     }
 
     boolean isPointInRectangle(Vector2D point) {
-        Line[] lines = getLines();
+        LinkedList<Line> lines = getLines();
 
-        return (lines[0].whereIsPointRelativeToLine(point) == 1 &&
-                lines[1].whereIsPointRelativeToLine(point) == -1 &&
-                lines[2].whereIsPointRelativeToLine(point) == -1 &&
-                lines[3].whereIsPointRelativeToLine(point) == 1);
+        return (lines.get(0).whereIsPointRelativeToLine(point) == 1 &&
+                lines.get(1).whereIsPointRelativeToLine(point) == -1 &&
+                lines.get(2).whereIsPointRelativeToLine(point) == -1 &&
+                lines.get(3).whereIsPointRelativeToLine(point) == 1);
     }
 
     /**
@@ -111,7 +130,7 @@ class Rectangle {
      * @return LinkedList<Vector2D> with points of the other rectangle within this rectangle
      */
     LinkedList<Vector2D> getIntersectingCornerPoints(Rectangle rectangle) {
-        Vector2D[] cornerPoints = rectangle.getCornerPoints();
+        LinkedList<Vector2D> cornerPoints = rectangle.getCornerPoints();
         LinkedList<Vector2D> cornerPointsIntersecting = new LinkedList<>();
         for (var cornerPoint : cornerPoints) {
             if (isPointInRectangle(cornerPoint)) {

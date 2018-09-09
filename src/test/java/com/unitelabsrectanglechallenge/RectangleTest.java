@@ -3,6 +3,7 @@ package com.unitelabsrectanglechallenge;
 import org.junit.jupiter.api.Test;
 
 import java.security.InvalidParameterException;
+import java.util.LinkedList;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -41,24 +42,39 @@ class RectangleTest {
     }
 
     @Test
+    void GetLinesConnectedToCorner_CornerNotInRectangle_Expect_Null() {
+        Rectangle rec = new Rectangle(new Vector2D(0, 0), 1, 1);
+        assertNull(rec.getLinesConnectedToCorner(new Vector2D(2, 2)));
+    }
+
+    @Test
+    void GetLinesConnectedToCorner_CornerInRectangle_Expect_ConnectedLines() {
+        Rectangle rec = new Rectangle(new Vector2D(0, 0), 1, 1);
+
+        LinkedList<Line> lines = rec.getLinesConnectedToCorner(new Vector2D(0, 0));
+        assertTrue(lines.contains(new Line(new Vector2D(0, 0), new Vector2D(0, 1))));
+        assertTrue(lines.contains(new Line(new Vector2D(0, 0), new Vector2D(1, 0))));
+    }
+
+    @Test
     void GetOtherCornerPoints() {
         Rectangle rec = new Rectangle(new Vector2D(0, 0), 3, 3);
         //Check if in counterclockwise order
-        Vector2D[] otherCornerPoints = rec.getNonOriginCornerPoints();
-        assertEquals(otherCornerPoints[0], new Vector2D(0, 3));
-        assertEquals(otherCornerPoints[1], new Vector2D(3, 3));
-        assertEquals(otherCornerPoints[2], new Vector2D(3, 0));
+        LinkedList<Vector2D> otherCornerPoints = rec.getNonOriginCornerPoints();
+        assertEquals(otherCornerPoints.get(0), new Vector2D(0, 3));
+        assertEquals(otherCornerPoints.get(1), new Vector2D(3, 3));
+        assertEquals(otherCornerPoints.get(2), new Vector2D(3, 0));
     }
 
     @Test
     void GetCornerPoints() {
         Rectangle rec = new Rectangle(new Vector2D(0, 0), 3, 3);
 
-        Vector2D[] cornerPoints = rec.getCornerPoints();
-        assertEquals(cornerPoints[0], new Vector2D(0, 0));
-        assertEquals(cornerPoints[1], new Vector2D(0, 3));
-        assertEquals(cornerPoints[2], new Vector2D(3, 3));
-        assertEquals(cornerPoints[3], new Vector2D(3, 0));
+        LinkedList<Vector2D> cornerPoints = rec.getCornerPoints();
+        assertEquals(cornerPoints.get(0), new Vector2D(0, 0));
+        assertEquals(cornerPoints.get(1), new Vector2D(0, 3));
+        assertEquals(cornerPoints.get(2), new Vector2D(3, 3));
+        assertEquals(cornerPoints.get(3), new Vector2D(3, 0));
     }
 
     @Test
@@ -74,11 +90,11 @@ class RectangleTest {
     void GetLines() {
         Rectangle rec = new Rectangle(new Vector2D(0, 0), 3, 3);
 
-        Line[] lines = rec.getLines();
-        assertEquals(lines[0], new Line(new Vector2D(0, 0), new Vector2D(0,3)));
-        assertEquals(lines[1], new Line(new Vector2D(0, 3), new Vector2D(3,3)));
-        assertEquals(lines[2], new Line(new Vector2D(3, 3), new Vector2D(3,0)));
-        assertEquals(lines[3], new Line(new Vector2D(3, 0), new Vector2D(0,0)));
+        LinkedList<Line> lines = rec.getLines();
+        assertEquals(lines.get(0), new Line(new Vector2D(0, 0), new Vector2D(0, 3)));
+        assertEquals(lines.get(1), new Line(new Vector2D(0, 3), new Vector2D(3, 3)));
+        assertEquals(lines.get(2), new Line(new Vector2D(3, 3), new Vector2D(3, 0)));
+        assertEquals(lines.get(3), new Line(new Vector2D(3, 0), new Vector2D(0, 0)));
     }
 
     @Test
