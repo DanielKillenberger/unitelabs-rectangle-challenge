@@ -1,8 +1,10 @@
 package com.unitelabsrectanglechallenge;
 
 import java.security.InvalidParameterException;
+import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.Objects;
+import java.util.Optional;
 
 
 class Rectangle {
@@ -18,6 +20,41 @@ class Rectangle {
         this.height = height;
     }
 
+    Rectangle(LinkedList<Vector2D> points) {
+
+        if (points.size() > 4 || points.size() < 3) {
+            throw new InvalidParameterException("Invalid amount of points - needs to be either 3 or 4");
+        }
+
+        if (new HashSet<>(points).size() != points.size()) {
+            throw new InvalidParameterException("List of points is not allowed to contain duplicates");
+        }
+
+        if (points.size() == 3) {
+            points.add(calculateFourthRectangleCornerFromThree(points));
+        }
+
+        Vector2D origin = getOrigin(points);
+
+        Optional<Vector2D> pointRight = points.stream().filter(p -> p.Y == origin.Y && !p.equals(origin)).findFirst();
+        Optional<Vector2D> pointDown = points.stream().filter(p -> p.X == origin.X && !p.equals(origin)).findFirst();
+
+        int width;
+        int height;
+        if (pointRight.isPresent() && pointDown.isPresent()) {
+            width = pointRight.get().X - origin.X;
+            height = pointDown.get().Y - origin.Y;
+            if (width == 0 || height == 0) {
+                throw new InvalidParameterException("Width and height must not be 0");
+            }
+            this.origin = origin;
+            this.width = width;
+            this.height = height;
+        } else {
+            throw new InvalidParameterException();
+        }
+    }
+
     /**
      * @param rectangle1
      * @param rectangle2
@@ -27,7 +64,7 @@ class Rectangle {
         LinkedList<Vector2D> cornerPointsFrom2IntersectingWith1 = rectangle1.getIntersectingCornerPoints(rectangle2);
         LinkedList<Vector2D> cornerPointsFrom1IntersectingWith2 = rectangle2.getIntersectingCornerPoints(rectangle1);
 
-        LinkedList<Vector2D> cornerPointsOfContainedRectangle;
+        LinkedList<Vector2D> overlappingCornerPointsOfContainedRectangle;
         LinkedList<Line> linesOfSurroundingRectangle;
         Rectangle containedRectangle;
         Rectangle surroundingRectangle;
@@ -40,12 +77,12 @@ class Rectangle {
         }
 
         if (cornerPointsFrom1IntersectingWith2.size() > cornerPointsFrom2IntersectingWith1.size()) {
-            cornerPointsOfContainedRectangle = cornerPointsFrom1IntersectingWith2;
+            overlappingCornerPointsOfContainedRectangle = cornerPointsFrom1IntersectingWith2;
             containedRectangle = rectangle1;
             surroundingRectangle = rectangle2;
 
         } else {
-            cornerPointsOfContainedRectangle = cornerPointsFrom2IntersectingWith1;
+            overlappingCornerPointsOfContainedRectangle = cornerPointsFrom2IntersectingWith1;
             containedRectangle = rectangle2;
             surroundingRectangle = rectangle1;
         }
@@ -56,16 +93,67 @@ class Rectangle {
         Check if surroundingRectangle includes all the points of the containedRectangle.
         => Intersection is containedRectangle.
          */
-        if (cornerPointsOfContainedRectangle.size() == 4) {
+        if (overlappingCornerPointsOfContainedRectangle.size() == 4) {
             return new RectangleFromIntersection(
-                    containedRectangle.origin,
-                    containedRectangle.width,
-                    containedRectangle.height,
+                    containedRectangle,
                     rectangle2,
                     rectangle1);
         }
 
-        return null;
+        /*
+        Determine the intersections of the lines of the rectangles
+         */
+        LinkedList<Vector2D> intersectionPoints = new LinkedList<>();
+        for (var corner : overlappingCornerPointsOfContainedRectangle) {
+            LinkedList<Line> cornerLines = containedRectangle.getLinesConnectedToCorner(corner);
+            for (var cornerLine : cornerLines) {
+                for (var line : linesOfSurroundingRectangle) {
+                    Vector2D intersectingPoint = Line.calculateIntersection(cornerLine, line);
+                    if (intersectingPoint != null) {
+                        intersectionPoints.add(intersectingPoint);
+                    }
+                }
+            }
+        }
+
+        /*
+        With the overlapping and intersecting points create a rectangle
+        using the constructor that takes a list of either 3 or 4 points
+         */
+        intersectionPoints.addAll(overlappingCornerPointsOfContainedRectangle);
+        return new RectangleFromIntersection(new Rectangle(intersectionPoints), rectangle1, rectangle2);
+    }
+
+    static Vector2D getOrigin(LinkedList<Vector2D> points) {
+        if (points.size() != 4 && new HashSet<>(points).size() != points.size()) {
+            throw new InvalidParameterException("Require four distinct points to get the origin point");
+        }
+
+        Vector2D originPoint = points.get(0);
+
+        for (int i = 1; i < points.size(); ++i) {
+            Vector2D currentPoint = points.get(i);
+            if (currentPoint.X < originPoint.X || currentPoint.Y < originPoint.Y) {
+                originPoint = currentPoint;
+            }
+        }
+
+        return originPoint;
+    }
+
+    static Vector2D calculateFourthRectangleCornerFromThree(LinkedList<Vector2D> points) {
+        if (points.size() != 3 || new HashSet<>(points).size() != points.size()) {
+            throw new InvalidParameterException("Require three distinct points to calculate the fourth");
+        }
+        int X = points.getFirst().X;
+        int Y = points.getFirst().Y;
+
+        for (int i = 1; i < 3; ++i) {
+            X ^= points.get(i).X;
+            Y ^= points.get(i).Y;
+        }
+
+        return new Vector2D(X, Y);
     }
 
     LinkedList<Line> getLinesConnectedToCorner(Vector2D corner) {
