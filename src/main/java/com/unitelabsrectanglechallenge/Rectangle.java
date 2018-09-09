@@ -44,9 +44,7 @@ class Rectangle {
         if (pointRight.isPresent() && pointDown.isPresent()) {
             width = pointRight.get().X - origin.X;
             height = pointDown.get().Y - origin.Y;
-            if (width == 0 || height == 0) {
-                throw new InvalidParameterException("Width and height must not be 0");
-            }
+
             this.origin = origin;
             this.width = width;
             this.height = height;
