@@ -7,6 +7,9 @@ class Line {
     final Vector2D p1, p2;
 
     Line(Vector2D p1, Vector2D p2) {
+        if (p1.equals(p2)) {
+            throw new InvalidParameterException("Points can not be equal to form a line");
+        }
         this.p1 = p1;
         this.p2 = p2;
     }
@@ -19,7 +22,7 @@ class Line {
         if(
             line1.p1.X != line1.p2.X && line1.p1.Y != line1.p2.Y ||
             line2.p1.X != line2.p2.X && line2.p1.Y != line2.p2.Y) {
-            throw new InvalidParameterException("Lines need to be parallel to either axis.");
+            throw new InvalidParameterException("Lines need to be parallel to either axis");
         }
 
         //Check if lines are parallel
