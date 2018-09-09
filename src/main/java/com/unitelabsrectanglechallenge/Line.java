@@ -40,8 +40,8 @@ class Line {
             int Y = line2.p1.Y;
 
             //Return if intersection within limits of the two lines
-            if (Math.max(line1.p1.Y, line1.p2.Y) > Y && Math.min(line1.p1.Y, line1.p2.Y) < Y &&
-                Math.max(line2.p1.X, line2.p2.X) > X && Math.min(line2.p1.X, line2.p2.X) < X) {
+            if (Math.max(line1.p1.Y, line1.p2.Y) >= Y && Math.min(line1.p1.Y, line1.p2.Y) <= Y &&
+                    Math.max(line2.p1.X, line2.p2.X) >= X && Math.min(line2.p1.X, line2.p2.X) <= X) {
                 return new Vector2D(X, Y);
             }
         }
@@ -52,8 +52,8 @@ class Line {
         int Y = line1.p1.Y;
 
         //Return if intersection within limits of the two lines
-        if (Math.max(line2.p1.Y, line2.p2.Y) > Y && Math.min(line2.p1.Y, line2.p2.Y) < Y &&
-                Math.max(line1.p1.X, line1.p2.X) > X && Math.min(line1.p1.X, line1.p2.X) < X) {
+        if (Math.max(line2.p1.Y, line2.p2.Y) >= Y && Math.min(line2.p1.Y, line2.p2.Y) <= Y &&
+                Math.max(line1.p1.X, line1.p2.X) >= X && Math.min(line1.p1.X, line1.p2.X) <= X) {
             return new Vector2D(X, Y);
         }
 

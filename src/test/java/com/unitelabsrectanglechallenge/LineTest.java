@@ -15,6 +15,7 @@ class LineTest {
         assertThrows(InvalidParameterException.class, () -> new Line(origin, origin));
     }
 
+
     @Test
     void CalculateIntersection_When_LinesDoNotCross_Expect_Null() {
         Line line1 = new Line(origin, new Vector2D(2, 0));
@@ -22,6 +23,15 @@ class LineTest {
 
         assertNull(Line.calculateIntersection(line1, line2));
         assertNull(Line.calculateIntersection(line2, line1));
+    }
+
+    @Test
+    void CalculateIntersection_When_IntersectionOnLine_Expect_PointOnLine() {
+        Line line1 = new Line(origin, new Vector2D(2, 0));
+        Line line2 = new Line(new Vector2D(1, 0), new Vector2D(1, 1));
+
+        assertEquals(new Vector2D(1, 0), Line.calculateIntersection(line1, line2));
+        assertEquals(new Vector2D(1, 0), Line.calculateIntersection(line2, line1));
     }
 
     @Test
