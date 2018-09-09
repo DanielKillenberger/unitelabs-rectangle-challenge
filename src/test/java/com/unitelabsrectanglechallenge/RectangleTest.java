@@ -74,6 +74,41 @@ class RectangleTest {
     }
 
     @Test
+    void CalculateFourthRectangleCornerFromThree_PointsContainDuplicates_Expect_InvalidParameterException() {
+        LinkedList<Vector2D> points = new LinkedList<>();
+
+        points.add(new Vector2D(0, 0));
+        points.add(new Vector2D(0, 0));
+        points.add(new Vector2D(0, 1));
+
+        assertThrows(InvalidParameterException.class, () -> Rectangle.calculateFourthRectangleCornerFromThree(points));
+    }
+
+    @Test
+    void CalculateFourthRectangleCornerFromThree_GivenThreeCorrectPoints_Expect_Correct4thPoint() {
+        LinkedList<Vector2D> points = new LinkedList<>();
+
+        points.add(new Vector2D(0, 0));
+        points.add(new Vector2D(1, 0));
+        points.add(new Vector2D(0, 1));
+
+        assertEquals(new Vector2D(1, 1), Rectangle.calculateFourthRectangleCornerFromThree(points));
+
+        points.removeLast();
+        points.add(new Vector2D(1, 1));
+
+        assertEquals(new Vector2D(0, 1), Rectangle.calculateFourthRectangleCornerFromThree(points));
+
+        points.remove(1);
+        points.add(new Vector2D(0, 1));
+        assertEquals(new Vector2D(1, 0), Rectangle.calculateFourthRectangleCornerFromThree(points));
+
+        points.removeFirst();
+        points.add(new Vector2D(1, 0));
+        assertEquals(new Vector2D(0, 0), Rectangle.calculateFourthRectangleCornerFromThree(points));
+    }
+
+    @Test
     void GetLinesConnectedToCorner_CornerNotInRectangle_Expect_Null() {
         Rectangle rec = new Rectangle(new Vector2D(0, 0), 1, 1);
 
