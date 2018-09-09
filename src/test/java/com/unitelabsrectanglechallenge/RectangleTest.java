@@ -35,6 +35,7 @@ class RectangleTest {
         Rectangle rec_expected2 = new Rectangle(new Vector2D(1, 0), 1, 1);
         Rectangle rec_expected3 = new Rectangle(new Vector2D(0, 1), 1, 1);
         Rectangle rec_expected4 = new Rectangle(new Vector2D(2, 1), 1, 1);
+
         assertEquals(rec_expected, Rectangle.calculateIntersection(rec, rec2));
         assertEquals(rec_expected2, Rectangle.calculateIntersection(rec, rec3));
         assertEquals(rec_expected3, Rectangle.calculateIntersection(rec, rec4));
@@ -72,6 +73,7 @@ class RectangleTest {
     @Test
     void GetLinesConnectedToCorner_CornerNotInRectangle_Expect_Null() {
         Rectangle rec = new Rectangle(new Vector2D(0, 0), 1, 1);
+
         assertNull(rec.getLinesConnectedToCorner(new Vector2D(2, 2)));
     }
 
@@ -80,6 +82,7 @@ class RectangleTest {
         Rectangle rec = new Rectangle(new Vector2D(0, 0), 1, 1);
 
         LinkedList<Line> lines = rec.getLinesConnectedToCorner(new Vector2D(0, 0));
+
         assertTrue(lines.contains(new Line(new Vector2D(0, 0), new Vector2D(0, 1))));
         assertTrue(lines.contains(new Line(new Vector2D(0, 0), new Vector2D(1, 0))));
     }
@@ -87,8 +90,10 @@ class RectangleTest {
     @Test
     void GetOtherCornerPoints() {
         Rectangle rec = new Rectangle(new Vector2D(0, 0), 3, 3);
-        //Check if in counterclockwise order
+
         LinkedList<Vector2D> otherCornerPoints = rec.getNonOriginCornerPoints();
+
+        //Check if in counterclockwise order
         assertEquals(otherCornerPoints.get(0), new Vector2D(0, 3));
         assertEquals(otherCornerPoints.get(1), new Vector2D(3, 3));
         assertEquals(otherCornerPoints.get(2), new Vector2D(3, 0));
@@ -99,6 +104,7 @@ class RectangleTest {
         Rectangle rec = new Rectangle(new Vector2D(0, 0), 3, 3);
 
         LinkedList<Vector2D> cornerPoints = rec.getCornerPoints();
+
         assertEquals(cornerPoints.get(0), new Vector2D(0, 0));
         assertEquals(cornerPoints.get(1), new Vector2D(0, 3));
         assertEquals(cornerPoints.get(2), new Vector2D(3, 3));
@@ -119,6 +125,7 @@ class RectangleTest {
         Rectangle rec = new Rectangle(new Vector2D(0, 0), 3, 3);
 
         LinkedList<Line> lines = rec.getLines();
+
         assertEquals(lines.get(0), new Line(new Vector2D(0, 0), new Vector2D(0, 3)));
         assertEquals(lines.get(1), new Line(new Vector2D(0, 3), new Vector2D(3, 3)));
         assertEquals(lines.get(2), new Line(new Vector2D(3, 3), new Vector2D(3, 0)));
@@ -128,6 +135,7 @@ class RectangleTest {
     @Test
     void IsPointInRectangle_WhenPointInRectangle_Expect_True() {
         Rectangle rec = new Rectangle(new Vector2D(0, 0), 3, 3);
+
         assertTrue(rec.isPointInRectangle(new Vector2D(1, 1)));
         assertTrue(rec.isPointInRectangle(new Vector2D(1, 2)));
         assertTrue(rec.isPointInRectangle(new Vector2D(2, 2)));
@@ -137,6 +145,7 @@ class RectangleTest {
     @Test
     void IsPointInRectangle_WhenPointOutsideRectangleOrOnBorder_Expect_False() {
         Rectangle rec = new Rectangle(new Vector2D(0, 0), 3, 3);
+
         // Outside on both axis
         assertFalse(rec.isPointInRectangle(new Vector2D(-1, -1)));
         assertFalse(rec.isPointInRectangle(new Vector2D(-1, 4)));
