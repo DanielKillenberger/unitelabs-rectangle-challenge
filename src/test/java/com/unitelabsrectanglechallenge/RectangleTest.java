@@ -24,7 +24,16 @@ class RectangleTest {
     }
 
     @Test
-    void CalculateIntersection_TopLeftCornerInRectangle_Expect_OriginAtTopleftCorner() {
+    void CalculateIntersection_TwoCornersInRectangle_Expect_CorrectRectangle() {
+        Rectangle rec = new Rectangle(new Vector2D(0, 0), 3, 2);
+        Rectangle rec2 = new Rectangle(new Vector2D(1, 1), 1, 1);
+
+        Rectangle rec_expected = new Rectangle(new Vector2D(1, 1), 1, 1);
+        assertEquals(rec_expected, Rectangle.calculateIntersection(rec, rec2));
+    }
+
+    @Test
+    void CalculateIntersection_TopLeftCornerInRectangle_Expect_CorrectRectangle() {
         Rectangle rec = new Rectangle(new Vector2D(0, 0), 2, 2);
         Rectangle rec2 = new Rectangle(new Vector2D(1, 1), 2, 2);
 
