@@ -51,7 +51,7 @@ class Line {
             return new Vector2D(X, Y);
         }
 
-        // Lines don't intersect due to them being to short
+        // Lines don't intersect due to them being too short
         return null;
 
     }
