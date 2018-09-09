@@ -18,9 +18,12 @@ class RectangleTest {
 
     @Test
     void CalculateIntersection_RectanglesThatDoNotIntersect_Expect_Null() {
-        Rectangle rec = new Rectangle(new Vector2D(0, 0), 1, 1);
-        Rectangle rec2 = new Rectangle(new Vector2D(1, 1), 1, 1);
+        Rectangle rec = new Rectangle(new Vector2D(0, 0), 2, 2);
+        Rectangle rec2 = new Rectangle(new Vector2D(2, 1), 1, 1);
+        Rectangle rec3 = new Rectangle(new Vector2D(2, 2), 1, 1);
+
         assertNull(Rectangle.calculateIntersection(rec, rec2));
+        assertNull(Rectangle.calculateIntersection(rec, rec3));
     }
 
     @Test
