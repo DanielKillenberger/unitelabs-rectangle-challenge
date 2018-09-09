@@ -17,6 +17,63 @@ class RectangleTest {
     }
 
     @Test
+    void Rectangle_GivenInvalidListOfPoints_Expect_InvalidParameterException() {
+        LinkedList<Vector2D> points = new LinkedList<>();
+
+        points.add(new Vector2D(0, 0));
+        points.add(new Vector2D(0, 0));
+        points.add(new Vector2D(0, 1));
+
+        //Duplicate Entries should throw
+        assertThrows(InvalidParameterException.class, () -> new Rectangle(points));
+
+        //Sloped side should throw
+        points.removeFirst();
+        points.removeLast();
+        points.add(new Vector2D(1, 1));
+        points.add(new Vector2D(1, 2));
+
+        assertThrows(InvalidParameterException.class, () -> new Rectangle(points));
+    }
+
+    @Test
+    void Rectangle_Given3Points_Expect_CorrectRectangle() {
+        LinkedList<Vector2D> points = new LinkedList<>();
+
+        points.add(new Vector2D(0, 0));
+        points.add(new Vector2D(0, 1));
+        points.add(new Vector2D(1, 0));
+
+        Rectangle expected_rec = new Rectangle(new Vector2D(0, 0), 1, 1);
+
+        assertEquals(expected_rec, new Rectangle(points));
+
+        points.removeFirst();
+
+        assertEquals(expected_rec, new Rectangle(points));
+
+        points.removeFirst();
+        assertEquals(expected_rec, new Rectangle(points));
+
+        points.removeFirst();
+        assertEquals(expected_rec, new Rectangle(points));
+    }
+
+    @Test
+    void Rectangle_Given4Points_Expect_CorrectRectangle() {
+        LinkedList<Vector2D> points = new LinkedList<>();
+
+        points.add(new Vector2D(0, 0));
+        points.add(new Vector2D(0, 1));
+        points.add(new Vector2D(1, 0));
+        points.add(new Vector2D(1, 1));
+
+        Rectangle expected_rec = new Rectangle(new Vector2D(0, 0), 1, 1);
+
+        assertEquals(expected_rec, new Rectangle(points));
+    }
+
+    @Test
     void CalculateIntersection_RectanglesThatDoNotIntersect_Expect_Null() {
         Rectangle rec = new Rectangle(new Vector2D(0, 0), 2, 2);
         Rectangle rec2 = new Rectangle(new Vector2D(2, 1), 1, 1);

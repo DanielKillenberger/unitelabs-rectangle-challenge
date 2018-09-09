@@ -20,7 +20,7 @@ class Rectangle {
         this.height = height;
     }
 
-    private Rectangle(LinkedList<Vector2D> points) {
+    Rectangle(LinkedList<Vector2D> points) {
 
         if (points.size() > 4 || points.size() < 3) {
             throw new InvalidParameterException("Invalid amount of points - needs to be either 3 or 4");
@@ -51,7 +51,8 @@ class Rectangle {
             this.width = width;
             this.height = height;
         } else {
-            throw new InvalidParameterException();
+            throw new InvalidParameterException(
+                    "Incorrect set of points to form a rectangle parallel to the x- and y-axis");
         }
     }
 
