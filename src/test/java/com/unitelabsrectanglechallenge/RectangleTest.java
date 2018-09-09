@@ -14,8 +14,16 @@ class RectangleTest {
         assertThrows(InvalidParameterException.class, () -> new Rectangle(new Vector2D(0, 0), 1, 0));
         assertThrows(InvalidParameterException.class, () -> new Rectangle(new Vector2D(0, 0), 0, 1));
     }
+
     @Test
-    void CalculateRectangleFromIntersection_TopLeftCornerInRectangle_Expect_OriginAtTopleftCorner() {
+    void CalculateIntersection_RectanglesThatDoNotIntersect_Expect_Null() {
+        Rectangle rec = new Rectangle(new Vector2D(0, 0), 1, 1);
+        Rectangle rec2 = new Rectangle(new Vector2D(1, 1), 1, 1);
+        assertNull(Rectangle.calculateIntersection(rec, rec2));
+    }
+
+    @Test
+    void CalculateIntersection_TopLeftCornerInRectangle_Expect_OriginAtTopleftCorner() {
         Rectangle rec = new Rectangle(new Vector2D(0, 0), 2, 2);
         Rectangle rec2 = new Rectangle(new Vector2D(1, 1), 2, 2);
 
@@ -24,7 +32,7 @@ class RectangleTest {
     }
 
     @Test
-    void CalculateRectangleFromIntersection_OneRectangleContainsOtherRectangle_Expect_OtherRectangle() {
+    void CalculateIntersection_OneRectangleContainsOtherRectangle_Expect_OtherRectangle() {
         Rectangle rec = new Rectangle(new Vector2D(0, 0), 4, 4);
         Rectangle rec2 = new Rectangle(new Vector2D(1, 1), 2, 2);
 

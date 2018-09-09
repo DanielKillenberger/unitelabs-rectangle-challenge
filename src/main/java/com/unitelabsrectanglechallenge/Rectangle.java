@@ -29,6 +29,14 @@ class Rectangle {
         LinkedList<Vector2D> cornerPointsOfContainedRectangle;
         Rectangle containedRectangle;
         Rectangle surroundingRectangle;
+
+        /*
+        Return null if no points are contained in the other Rectangle
+         */
+        if (cornerPointsFrom1IntersectingWith2.size() == 0 && cornerPointsFrom2IntersectingWith1.size() == 0) {
+            return null;
+        }
+
         if (cornerPointsFrom1IntersectingWith2.size() > cornerPointsFrom2IntersectingWith1.size()) {
             cornerPointsOfContainedRectangle = cornerPointsFrom1IntersectingWith2;
             containedRectangle = rectangle1;
@@ -38,9 +46,10 @@ class Rectangle {
             containedRectangle = rectangle2;
             surroundingRectangle = rectangle1;
         }
+
         /*
-        Check if one of the rectangle includes all the points of the other rectangle.
-        => Intersection would be the rectangle contained in the other.
+        Check if surroundingRectangle includes all the points of the containedRectangle.
+        => Intersection is containedRectangle.
          */
         if (cornerPointsOfContainedRectangle.size() == 4) {
             return new RectangleFromIntersection(
@@ -50,7 +59,6 @@ class Rectangle {
                     rectangle2,
                     rectangle1);
         }
-
 
         return null;
     }
