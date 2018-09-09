@@ -62,14 +62,10 @@ class Line {
      * Point is on line when 0 is returned.
      */
     int whereIsPointRelativeToLine(Vector2D point) {
-
-        /*
-         * Invert line equation in case x1 == x2 in order to not run into divide by zero
-         */
-        float result = p1.X == p2.X ?
-                point.X - p1.X - (p2.X - p1.X) / (p2.Y - p1.Y) * (point.Y - p1.Y) :
-                point.Y - p1.Y - (p2.Y - p1.Y) / (p2.X - p1.X) * (point.X - p1.X);
-        return result == 0 ? 0 : result > 0 ? 1 : -1;
+        int result = p1.X == p2.X ?
+                point.X - p1.X :
+                point.Y - p1.Y;
+        return Integer.compare(result, 0);
     }
 
     @Override
