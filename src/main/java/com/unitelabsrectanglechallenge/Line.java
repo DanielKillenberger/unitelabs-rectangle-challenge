@@ -10,21 +10,15 @@ class Line {
         if (p1.equals(p2)) {
             throw new InvalidParameterException("Points can not be equal to form a line");
         }
+
+        if (p1.X != p2.X && p1.Y != p2.Y) {
+            throw new InvalidParameterException("Line needs to be parallel to either axis");
+        }
         this.p1 = p1;
         this.p2 = p2;
     }
 
     static Vector2D calculateIntersection(Line line1, Line line2) throws InvalidParameterException {
-        /*
-        Check if lines are parallel to axis
-        This intersection calculation won't work otherwise => throw error
-         */
-        if(
-            line1.p1.X != line1.p2.X && line1.p1.Y != line1.p2.Y ||
-            line2.p1.X != line2.p2.X && line2.p1.Y != line2.p2.Y) {
-            throw new InvalidParameterException("Lines need to be parallel to either axis");
-        }
-
         //Check if lines are parallel
         if (
             line1.p1.X == line1.p2.X && line2.p1.X == line2.p2.X ||
