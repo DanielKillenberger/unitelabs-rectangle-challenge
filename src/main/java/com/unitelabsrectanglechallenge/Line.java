@@ -1,6 +1,6 @@
 package com.unitelabsrectanglechallenge;
 
-import java.util.InvalidPropertiesFormatException;
+import java.security.InvalidParameterException;
 import java.util.Objects;
 
 class Line {
@@ -11,7 +11,7 @@ class Line {
         this.p2 = p2;
     }
 
-    static Vector2D calculateIntersection(Line line1, Line line2) throws InvalidPropertiesFormatException {
+    static Vector2D calculateIntersection(Line line1, Line line2) throws InvalidParameterException {
         /*
         Check if lines are parallel to axis
         This intersection calculation won't work otherwise => throw error
@@ -19,7 +19,7 @@ class Line {
         if(
             line1.p1.X != line1.p2.X && line1.p1.Y != line1.p2.Y ||
             line2.p1.X != line2.p2.X && line2.p1.Y != line2.p2.Y) {
-            throw new InvalidPropertiesFormatException("Lines need to be parallel to either axis.");
+            throw new InvalidParameterException("Lines need to be parallel to either axis.");
         }
 
         //Check if lines are parallel
