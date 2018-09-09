@@ -20,7 +20,7 @@ class Rectangle {
         this.height = height;
     }
 
-    Rectangle(LinkedList<Vector2D> points) {
+    private Rectangle(LinkedList<Vector2D> points) {
 
         if (points.size() > 4 || points.size() < 3) {
             throw new InvalidParameterException("Invalid amount of points - needs to be either 3 or 4");
@@ -124,7 +124,7 @@ class Rectangle {
         return new RectangleFromIntersection(new Rectangle(intersectionPoints), rectangle1, rectangle2);
     }
 
-    static Vector2D getOrigin(LinkedList<Vector2D> points) {
+    private static Vector2D getOrigin(LinkedList<Vector2D> points) {
         if (points.size() != 4 && new HashSet<>(points).size() != points.size()) {
             throw new InvalidParameterException("Require four distinct points to get the origin point");
         }
@@ -141,7 +141,7 @@ class Rectangle {
         return originPoint;
     }
 
-    static Vector2D calculateFourthRectangleCornerFromThree(LinkedList<Vector2D> points) {
+    private static Vector2D calculateFourthRectangleCornerFromThree(LinkedList<Vector2D> points) {
         if (points.size() != 3 || new HashSet<>(points).size() != points.size()) {
             throw new InvalidParameterException("Require three distinct points to calculate the fourth");
         }
