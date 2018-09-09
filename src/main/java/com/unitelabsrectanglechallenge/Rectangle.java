@@ -1,5 +1,6 @@
 package com.unitelabsrectanglechallenge;
 
+import java.security.InvalidParameterException;
 import java.util.LinkedList;
 import java.util.Objects;
 
@@ -8,6 +9,9 @@ class Rectangle {
     final int width, height;
 
     Rectangle(Vector2D origin, int width, int height) {
+        if (width == 0 || height == 0) {
+            throw new InvalidParameterException("Width and height must not be 0");
+        }
         this.origin = origin;
         this.width = width;
         this.height = height;

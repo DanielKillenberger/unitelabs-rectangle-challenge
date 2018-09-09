@@ -2,11 +2,18 @@ package com.unitelabsrectanglechallenge;
 
 import org.junit.jupiter.api.Test;
 
-import java.util.LinkedList;
+import java.security.InvalidParameterException;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 class RectangleTest {
+
+    @Test
+    void Rectangle_WidthOrHeightEqualTo0_Expect_InvalidParameterException() {
+        assertThrows(InvalidParameterException.class, () -> new Rectangle(new Vector2D(0, 0), 0, 0));
+        assertThrows(InvalidParameterException.class, () -> new Rectangle(new Vector2D(0, 0), 1, 0));
+        assertThrows(InvalidParameterException.class, () -> new Rectangle(new Vector2D(0, 0), 0, 1));
+    }
     @Test
     void CalculateRectangleFromIntersection_TopLeftCornerInRectangle_Expect_OriginAtTopleftCorner() {
         Rectangle rec = new Rectangle(new Vector2D(0, 0), 2, 2);
