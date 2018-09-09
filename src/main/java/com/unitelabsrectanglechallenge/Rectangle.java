@@ -26,16 +26,31 @@ class Rectangle {
         LinkedList<Vector2D> cornerPointsFrom2IntersectingWith1 = rectangle1.getIntersectingCornerPoints(rectangle2);
         LinkedList<Vector2D> cornerPointsFrom1IntersectingWith2 = rectangle2.getIntersectingCornerPoints(rectangle1);
 
+        LinkedList<Vector2D> cornerPointsOfContainedRectangle;
+        Rectangle containedRectangle;
+        Rectangle surroundingRectangle;
+        if (cornerPointsFrom1IntersectingWith2.size() > cornerPointsFrom2IntersectingWith1.size()) {
+            cornerPointsOfContainedRectangle = cornerPointsFrom1IntersectingWith2;
+            containedRectangle = rectangle1;
+            surroundingRectangle = rectangle2;
+        } else {
+            cornerPointsOfContainedRectangle = cornerPointsFrom2IntersectingWith1;
+            containedRectangle = rectangle2;
+            surroundingRectangle = rectangle1;
+        }
         /*
         Check if one of the rectangle includes all the points of the other rectangle.
         => Intersection would be the rectangle contained in the other.
          */
-        if (cornerPointsFrom2IntersectingWith1.size() == 4) {
-            return new RectangleFromIntersection(rectangle2.origin, rectangle2.width, rectangle2.height, rectangle2, rectangle1);
+        if (cornerPointsOfContainedRectangle.size() == 4) {
+            return new RectangleFromIntersection(
+                    containedRectangle.origin,
+                    containedRectangle.width,
+                    containedRectangle.height,
+                    rectangle2,
+                    rectangle1);
         }
-        if (cornerPointsFrom1IntersectingWith2.size() == 4) {
-            return new RectangleFromIntersection(rectangle1.origin, rectangle1.width, rectangle1.height, rectangle2, rectangle1);
-        }
+
 
         return null;
     }
@@ -84,7 +99,6 @@ class Rectangle {
     }
 
     /**
-     *
      * @param rectangle
      * @return LinkedList<Vector2D> with points of the other rectangle within this rectangle
      */
@@ -106,10 +120,10 @@ class Rectangle {
 
     @Override
     public boolean equals(Object other) {
-        if (other == this){
+        if (other == this) {
             return true;
         }
-        if(!(other instanceof Rectangle)){
+        if (!(other instanceof Rectangle)) {
             return false;
         }
         Rectangle o = (Rectangle) other;
