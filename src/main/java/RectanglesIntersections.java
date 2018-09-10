@@ -62,13 +62,12 @@ public class RectanglesIntersections {
             System.out.println(rec);
         }
 
-        System.out.println("\nOutput:");
         int intersectionRectangleCounter = 1;
 
         /*
         On each level we intersect each rectangle in that list with every other one.
         The resulting intersections fill up the next level of the 2d LinkedList.
-        
+
         While loop terminates when no new level has been added to the 2d LinkedList
         in one complete iteration meaning no more additional intersections.
          */
@@ -99,9 +98,7 @@ public class RectanglesIntersections {
             }
         }
 
-        /*
-        Output the intersections
-         */
+        System.out.println("\nOutput:");
         for (int i = 1; i < rectangles.size(); ++i) {
             var level = rectangles.get(i);
             for (var rec : level) {
