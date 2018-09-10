@@ -83,7 +83,8 @@ public class RectanglesIntersections {
             }
         }
 
-        for (var level : rectangles) {
+        for (int i = 1; i < rectangles.size(); ++i) {
+            var level = rectangles.get(i);
             for(var rec : level) {
                 System.out.println(rec);
             }
