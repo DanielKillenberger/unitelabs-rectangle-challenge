@@ -247,4 +247,9 @@ class Rectangle {
         Rectangle o = (Rectangle) other;
         return o.origin.equals(origin) && o.width == width && o.height == height;
     }
+
+    @Override
+    public String toString() {
+        return number + ": Rectangle at " + origin + ", w=" + width + ", h="+height;
+    }
 }

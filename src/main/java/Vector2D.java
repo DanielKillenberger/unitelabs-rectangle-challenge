@@ -32,4 +32,9 @@ class Vector2D {
     public int hashCode() {
         return Objects.hash(X, Y);
     }
+
+    @Override
+    public String toString() {
+        return "(" + X + "," + Y + ")";
+    }
 }

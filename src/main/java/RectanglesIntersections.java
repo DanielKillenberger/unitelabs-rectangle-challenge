@@ -28,9 +28,10 @@ public class RectanglesIntersections {
             JsonReader reader = new JsonReader(new FileReader(filePath));
             JsonWrapperObject data = gson.fromJson(reader, JsonWrapperObject.class);
 
+            int counter = 1;
             for (var rec : data.recs) {
                 if (rec != null) {
-                    rectangles.add(new Rectangle(new Vector2D(rec.x, rec.y), rec.w, rec.h));
+                    rectangles.add(new Rectangle(new Vector2D(rec.x, rec.y), rec.w, rec.h, counter++));
                 }
             }
         } catch (FileNotFoundException e) {
@@ -39,17 +40,35 @@ public class RectanglesIntersections {
             throw new JsonSyntaxException("Badly formatted json file - terminating");
         }
 
+        System.out.println("Input:");
+        for(var rec : rectangles) {
+            System.out.println(rec);
+        }
+
+        System.out.println("\nOutput:");
+        int counter = 1;
         LinkedList<RectangleFromIntersection> rectanglesFromIntersections= new LinkedList<>();
         for(int i = 0; i < rectangles.size()-1; ++i) {
             for(int j = i+1; j < rectangles.size(); j++) {
                 RectangleFromIntersection result = Rectangle.calculateIntersection(rectangles.get(i), rectangles.get(j));
                 if(result != null) {
+                    result.number = counter++;
                     rectanglesFromIntersections.add(result);
                 }
             }
         }
 
-        System.out.println(rectanglesFromIntersections);
+        int oldAmountIntersections = rectanglesFromIntersections.size();
+        while(oldAmountIntersections != rectanglesFromIntersections.size()) {
+            for(int i = 0; i < oldAmountIntersections; ++i) {
+
+            }
+        }
+
+        for (var rec : rectanglesFromIntersections) {
+            System.out.println(rec);
+        }
+
     }
 }
 

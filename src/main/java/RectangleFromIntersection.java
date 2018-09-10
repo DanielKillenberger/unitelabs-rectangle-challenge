@@ -1,3 +1,5 @@
+import java.util.LinkedList;
+
 class RectangleFromIntersection extends Rectangle {
     Rectangle parent1;
     Rectangle parent2;
@@ -10,5 +12,33 @@ class RectangleFromIntersection extends Rectangle {
 
     RectangleFromIntersection(Rectangle rectangle, Rectangle parent1, Rectangle parent2) {
         this(rectangle.origin, rectangle.width, rectangle.height, parent1, parent2);
+    }
+
+    private LinkedList<Integer> getParentNumbers(Rectangle rectangle,
+                                                 LinkedList<Integer> parentNumbers) {
+        if(!(rectangle instanceof RectangleFromIntersection)) {
+            parentNumbers.add(rectangle.number);
+            return parentNumbers;
+        }
+        parentNumbers = getParentNumbers(parent1, parentNumbers);
+        parentNumbers = getParentNumbers(parent2, parentNumbers);
+        return parentNumbers;
+    }
+
+    @Override
+    public String toString() {
+        LinkedList<Integer> parentNumbers = new LinkedList<>();
+        parentNumbers = getParentNumbers(parent1, parentNumbers);
+        parentNumbers = getParentNumbers(parent2, parentNumbers);
+
+        String parentNumbersString = "";
+
+        for(int i = 0; i < parentNumbers.size(); ++i) {
+            parentNumbersString += parentNumbers.get(i).intValue() + i < parentNumbers.size() ? ", " : " and ";
+        }
+        parentNumbersString += " ";
+
+        return number +": Between rectangle " + parentNumbersString + origin +
+                ", w="+width +", h=" + height;
     }
 }
