@@ -8,13 +8,15 @@ buildscript {
     }
 }
 
-apply plugin: 'com.github.johnrengelman.shadow'
 apply plugin: 'java'
 apply plugin: 'idea'
 apply plugin: 'application'
 
 // Define the main class for the application
 mainClassName = 'RectanglesIntersections'
+
+apply plugin: 'com.github.johnrengelman.shadow'
+
 
 dependencies {
     // This dependency is found on compile classpath of this component and consumers.
