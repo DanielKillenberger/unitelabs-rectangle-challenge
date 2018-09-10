@@ -18,14 +18,13 @@ class Line {
 
     static Vector2D calculateIntersection(Line line1, Line line2) throws InvalidParameterException {
         //Check if lines are parallel
-        if (
-            line1.p1.x == line1.p2.x && line2.p1.x == line2.p2.x ||
-            line1.p1.y == line1.p2.y && line2.p1.y == line2.p2.y) {
+        if (line1.p1.x == line1.p2.x && line2.p1.x == line2.p2.x ||
+                line1.p1.y == line1.p2.y && line2.p1.y == line2.p2.y) {
             return null;
         }
 
         //Line1 is horizontal => line2 is vertical as they are not parallel but aligned with axis
-        if(line1.p1.x == line1.p2.x) {
+        if (line1.p1.x == line1.p2.x) {
 
             //Form potential intersecting point
             int X = line1.p1.x;

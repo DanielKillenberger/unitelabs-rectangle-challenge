@@ -23,7 +23,7 @@ class RectangleFromIntersection extends Rectangle {
     LinkedList<Rectangle> getParents(Rectangle rectangle,
                                      LinkedList<Rectangle> parents) {
         if (rectangle instanceof RectangleFromIntersection) {
-            RectangleFromIntersection r = (RectangleFromIntersection)rectangle;
+            RectangleFromIntersection r = (RectangleFromIntersection) rectangle;
             parents = getParents(r.parent1, parents);
             parents = getParents(r.parent2, parents);
             return parents;

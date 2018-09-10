@@ -18,7 +18,7 @@ class Vector2D {
 
     @Override
     public boolean equals(Object other) {
-        if (other == this){
+        if (other == this) {
             return true;
         }
         if (!(other instanceof Vector2D)) {

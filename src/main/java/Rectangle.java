@@ -250,6 +250,6 @@ class Rectangle {
 
     @Override
     public String toString() {
-        return number + ": Rectangle at " + origin + ", w=" + width + ", h="+height;
+        return number + ": Rectangle at " + origin + ", w=" + width + ", h=" + height;
     }
 }
