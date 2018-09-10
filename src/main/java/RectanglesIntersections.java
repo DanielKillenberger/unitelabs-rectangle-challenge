@@ -66,8 +66,9 @@ public class RectanglesIntersections {
         int intersectionRectangleCounter = 1;
 
         /*
-        On each level we intersect each rectangle in that list with every other one
-        The resulting intersections fill up the next level of the 2d LinkedList
+        On each level we intersect each rectangle in that list with every other one.
+        The resulting intersections fill up the next level of the 2d LinkedList.
+        
         While loop terminates when no new level has been added to the 2d LinkedList
         in one complete iteration meaning no more additional intersections.
          */
