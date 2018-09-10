@@ -1,3 +1,5 @@
+import java.util.Comparator;
+import java.util.HashSet;
 import java.util.LinkedList;
 
 class RectangleFromIntersection extends Rectangle {
@@ -14,31 +16,41 @@ class RectangleFromIntersection extends Rectangle {
         this(rectangle.origin, rectangle.width, rectangle.height, parent1, parent2);
     }
 
-    private LinkedList<Integer> getParentNumbers(Rectangle rectangle,
-                                                 LinkedList<Integer> parentNumbers) {
-        if(!(rectangle instanceof RectangleFromIntersection)) {
-            parentNumbers.add(rectangle.number);
-            return parentNumbers;
+    LinkedList<Rectangle> getParents() {
+        return getParents(this, new LinkedList<>());
+    }
+
+    LinkedList<Rectangle> getParents(Rectangle rectangle,
+                                     LinkedList<Rectangle> parents) {
+        if (rectangle instanceof RectangleFromIntersection) {
+            RectangleFromIntersection r = (RectangleFromIntersection)rectangle;
+            parents = getParents(r.parent1, parents);
+            parents = getParents(r.parent2, parents);
+            return parents;
+        } else {
+            parents.add(rectangle);
+            parents = new LinkedList<>(new HashSet<>(parents));
+            parents.sort(Comparator.comparingInt(rectangle2 -> rectangle2.number));
+            return parents;
         }
-        parentNumbers = getParentNumbers(parent1, parentNumbers);
-        parentNumbers = getParentNumbers(parent2, parentNumbers);
-        return parentNumbers;
     }
 
     @Override
     public String toString() {
-        LinkedList<Integer> parentNumbers = new LinkedList<>();
-        parentNumbers = getParentNumbers(parent1, parentNumbers);
-        parentNumbers = getParentNumbers(parent2, parentNumbers);
+        LinkedList<Rectangle> parents = getParents();
 
-        String parentNumbersString = "";
+        StringBuilder parentNumbersString = new StringBuilder();
 
-        for(int i = 0; i < parentNumbers.size(); ++i) {
-            parentNumbersString += parentNumbers.get(i).intValue() + i < parentNumbers.size() ? ", " : " and ";
+        for (int i = 0; i < parents.size(); ++i) {
+            parentNumbersString.append(parents.get(i).number);
+            parentNumbersString.append(i < parents.size() - 2
+                    ? ", "
+                    : i == parents.size() - 2
+                    ? " and "
+                    : "");
         }
-        parentNumbersString += " ";
 
-        return number +": Between rectangle " + parentNumbersString + origin +
-                ", w="+width +", h=" + height;
+        return number + ": Between rectangle " + parentNumbersString + " at " + origin +
+                ", w=" + width + ", h=" + height;
     }
 }
