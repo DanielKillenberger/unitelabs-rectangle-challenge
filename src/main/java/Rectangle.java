@@ -40,14 +40,14 @@ class Rectangle {
 
         Vector2D origin = getOrigin(points);
 
-        Optional<Vector2D> pointRight = points.stream().filter(p -> p.Y == origin.Y && !p.equals(origin)).findFirst();
-        Optional<Vector2D> pointDown = points.stream().filter(p -> p.X == origin.X && !p.equals(origin)).findFirst();
+        Optional<Vector2D> pointRight = points.stream().filter(p -> p.y == origin.y && !p.equals(origin)).findFirst();
+        Optional<Vector2D> pointDown = points.stream().filter(p -> p.x == origin.x && !p.equals(origin)).findFirst();
 
         int width;
         int height;
         if (pointRight.isPresent() && pointDown.isPresent()) {
-            width = pointRight.get().X - origin.X;
-            height = pointDown.get().Y - origin.Y;
+            width = pointRight.get().x - origin.x;
+            height = pointDown.get().y - origin.y;
 
             this.origin = origin;
             this.width = width;
@@ -136,7 +136,7 @@ class Rectangle {
 
         for (int i = 1; i < points.size(); ++i) {
             Vector2D currentPoint = points.get(i);
-            if (currentPoint.X < originPoint.X || currentPoint.Y < originPoint.Y) {
+            if (currentPoint.x < originPoint.x || currentPoint.y < originPoint.y) {
                 originPoint = currentPoint;
             }
         }
@@ -148,12 +148,12 @@ class Rectangle {
         if (points.size() != 3 || new HashSet<>(points).size() != points.size()) {
             throw new InvalidParameterException("Require three distinct points to calculate the fourth");
         }
-        int X = points.getFirst().X;
-        int Y = points.getFirst().Y;
+        int X = points.getFirst().x;
+        int Y = points.getFirst().y;
 
         for (int i = 1; i < 3; ++i) {
-            X ^= points.get(i).X;
-            Y ^= points.get(i).Y;
+            X ^= points.get(i).x;
+            Y ^= points.get(i).y;
         }
 
         return new Vector2D(X, Y);

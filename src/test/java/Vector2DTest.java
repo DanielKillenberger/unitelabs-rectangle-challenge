@@ -9,16 +9,16 @@ class Vector2DTest {
     void Plus_Addition_Expect_AddedNumbers() {
         Vector2D v1 = new Vector2D(0, 0);
         Vector2D v2 = new Vector2D(1, 1);
-        assertEquals(1, v1.plus(v2).X);
-        assertEquals(1, v1.plus(v2).Y);
+        assertEquals(1, v1.plus(v2).x);
+        assertEquals(1, v1.plus(v2).y);
     }
 
     @Test
     void Minus_Subtraction_Expect_SubtractedNumbers() {
         Vector2D v1 = new Vector2D(0, 0);
         Vector2D v2 = new Vector2D(1, 1);
-        assertEquals(-1, v1.minus(v2).X);
-        assertEquals(-1, v1.minus(v2).Y);
+        assertEquals(-1, v1.minus(v2).x);
+        assertEquals(-1, v1.minus(v2).y);
     }
 
     @Test

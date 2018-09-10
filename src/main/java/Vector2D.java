@@ -1,19 +1,19 @@
 import java.util.Objects;
 
 class Vector2D {
-    final int X, Y;
+    final int x, y;
 
-    Vector2D(int X, int Y) {
-        this.X = X;
-        this.Y = Y;
+    Vector2D(int x, int y) {
+        this.x = x;
+        this.y = y;
     }
 
     Vector2D plus(Vector2D b) {
-        return new Vector2D(Math.addExact(X, b.X), Math.addExact(Y, b.Y));
+        return new Vector2D(Math.addExact(x, b.x), Math.addExact(y, b.y));
     }
 
     Vector2D minus(Vector2D b) {
-        return new Vector2D(Math.subtractExact(X, b.X), Math.subtractExact(Y, b.Y));
+        return new Vector2D(Math.subtractExact(x, b.x), Math.subtractExact(y, b.y));
     }
 
     @Override
@@ -25,16 +25,16 @@ class Vector2D {
             return false;
         }
         Vector2D o = (Vector2D) other;
-        return o.X == X && o.Y == Y;
+        return o.x == x && o.y == y;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(X, Y);
+        return Objects.hash(x, y);
     }
 
     @Override
     public String toString() {
-        return "(" + X + "," + Y + ")";
+        return "(" + x + "," + y + ")";
     }
 }

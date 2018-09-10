@@ -9,7 +9,7 @@ class Line {
             throw new InvalidParameterException("Points can not be equal to form a line");
         }
 
-        if (p1.X != p2.X && p1.Y != p2.Y) {
+        if (p1.x != p2.x && p1.y != p2.y) {
             throw new InvalidParameterException("Line needs to be parallel to either axis");
         }
         this.p1 = p1;
@@ -19,33 +19,33 @@ class Line {
     static Vector2D calculateIntersection(Line line1, Line line2) throws InvalidParameterException {
         //Check if lines are parallel
         if (
-            line1.p1.X == line1.p2.X && line2.p1.X == line2.p2.X ||
-            line1.p1.Y == line1.p2.Y && line2.p1.Y == line2.p2.Y) {
+            line1.p1.x == line1.p2.x && line2.p1.x == line2.p2.x ||
+            line1.p1.y == line1.p2.y && line2.p1.y == line2.p2.y) {
             return null;
         }
 
         //Line1 is horizontal => line2 is vertical as they are not parallel but aligned with axis
-        if(line1.p1.X == line1.p2.X) {
+        if(line1.p1.x == line1.p2.x) {
 
             //Form potential intersecting point
-            int X = line1.p1.X;
-            int Y = line2.p1.Y;
+            int X = line1.p1.x;
+            int Y = line2.p1.y;
 
             //Return if intersection within limits of the two lines
-            if (Math.max(line1.p1.Y, line1.p2.Y) >= Y && Math.min(line1.p1.Y, line1.p2.Y) <= Y &&
-                    Math.max(line2.p1.X, line2.p2.X) >= X && Math.min(line2.p1.X, line2.p2.X) <= X) {
+            if (Math.max(line1.p1.y, line1.p2.y) >= Y && Math.min(line1.p1.y, line1.p2.y) <= Y &&
+                    Math.max(line2.p1.x, line2.p2.x) >= X && Math.min(line2.p1.x, line2.p2.x) <= X) {
                 return new Vector2D(X, Y);
             }
         }
         //Line1 is vertical
 
         //Form potential intersecting point
-        int X = line2.p1.X;
-        int Y = line1.p1.Y;
+        int X = line2.p1.x;
+        int Y = line1.p1.y;
 
         //Return if intersection within limits of the two lines
-        if (Math.max(line2.p1.Y, line2.p2.Y) >= Y && Math.min(line2.p1.Y, line2.p2.Y) <= Y &&
-                Math.max(line1.p1.X, line1.p2.X) >= X && Math.min(line1.p1.X, line1.p2.X) <= X) {
+        if (Math.max(line2.p1.y, line2.p2.y) >= Y && Math.min(line2.p1.y, line2.p2.y) <= Y &&
+                Math.max(line1.p1.x, line1.p2.x) >= X && Math.min(line1.p1.x, line1.p2.x) <= X) {
             return new Vector2D(X, Y);
         }
 
@@ -60,9 +60,9 @@ class Line {
      * Point is on line when 0 is returned.
      */
     int whereIsPointRelativeToLine(Vector2D point) {
-        int result = p1.X == p2.X ?
-                point.X - p1.X :
-                point.Y - p1.Y;
+        int result = p1.x == p2.x ?
+                point.x - p1.x :
+                point.y - p1.y;
         return Integer.compare(result, 0);
     }
 
