@@ -7,14 +7,14 @@ of all rectangles given in json format.
 
 For the format of the rectangles see test.json
 
-##Build
+## Build
 
 The following will run all tests, compile the class files and 
 build a jar with all dependencies.
-##Prerequisites
+## Prerequisites
 
 Java jdk installed
-###Unix
+### Unix
 
 Cd into the working directory and execute the gradlew script 
 as follows:
@@ -23,7 +23,7 @@ as follows:
 chmod +x gradlew
 ./gradlew build
 ```
-###Windows
+### Windows
 
 Cd into the working directory and then execute the gradlew.bat
 file as follows:
@@ -31,7 +31,7 @@ file as follows:
 gradlew build
 ```
 
-##Running the Jar
+## Running the Jar
 
 To execute the built jar and parse test.json in the working directory
 enter the following command:
