@@ -11,10 +11,10 @@ For the format of the rectangles see test.json
 
 The following will run all tests, compile the class files and 
 build a jar with all dependencies.
-## Prerequisites
+### Prerequisites
 
 Java jdk installed
-### Unix
+#### Unix
 
 Cd into the working directory and execute the gradlew script 
 as follows:
@@ -23,7 +23,7 @@ as follows:
 chmod +x gradlew
 ./gradlew build
 ```
-### Windows
+#### Windows
 
 Cd into the working directory and then execute the gradlew.bat
 file as follows:
