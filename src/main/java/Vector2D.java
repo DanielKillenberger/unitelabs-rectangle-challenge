@@ -1,5 +1,3 @@
-package com.unitelabsrectanglechallenge;
-
 import java.util.Objects;
 
 class Vector2D {

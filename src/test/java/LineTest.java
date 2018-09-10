@@ -1,5 +1,4 @@
-package com.unitelabsrectanglechallenge;
-
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import java.security.InvalidParameterException;
@@ -12,14 +11,13 @@ class LineTest {
 
     @Test
     void Line_When_ParameterPointsAreEqual_Expect_InvalidParameterException() {
-        assertThrows(InvalidParameterException.class, () -> new Line(origin, origin));
+        Assertions.assertThrows(InvalidParameterException.class, () -> new Line(origin, origin));
     }
 
     @Test
     void Line_When_LineNotParallelToAxis_Expect_InvalidParameterException() {
-        assertThrows(InvalidParameterException.class, () -> new Line(origin, new Vector2D(1, 1)));
+        Assertions.assertThrows(InvalidParameterException.class, () -> new Line(origin, new Vector2D(1, 1)));
     }
-
 
     @Test
     void CalculateIntersection_When_LinesDoNotCross_Expect_Null() {

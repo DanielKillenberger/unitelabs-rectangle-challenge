@@ -1,5 +1,4 @@
-package com.unitelabsrectanglechallenge;
-
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -26,13 +25,13 @@ class Vector2DTest {
     void Plus_IntegerOverflow_Expect_ArithmeticException() {
         Vector2D v1 = new Vector2D(2000000000, 0);
         Vector2D v2 = new Vector2D(1000000000, 0);
-        assertThrows(ArithmeticException.class, () -> v1.plus(v2));
+        Assertions.assertThrows(ArithmeticException.class, () -> v1.plus(v2));
     }
 
     @Test
     void Minus_IntegerUnderFlow_Expect_ArithmeticException() {
         Vector2D v1 = new Vector2D(2000000000, 0);
         Vector2D v2 = new Vector2D(-1000000000, 0);
-        assertThrows(ArithmeticException.class, () -> v2.minus(v1));
+        Assertions.assertThrows(ArithmeticException.class, () -> v2.minus(v1));
     }
 }

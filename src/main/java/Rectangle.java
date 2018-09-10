@@ -1,5 +1,3 @@
-package com.unitelabsrectanglechallenge;
-
 import java.security.InvalidParameterException;
 import java.util.HashSet;
 import java.util.LinkedList;
@@ -10,14 +8,20 @@ import java.util.Optional;
 class Rectangle {
     final Vector2D origin;
     final int width, height;
+    int number;
 
-    Rectangle(Vector2D origin, int width, int height) {
+    Rectangle(Vector2D origin, int width, int height, int number) {
         if (width == 0 || height == 0) {
             throw new InvalidParameterException("Width and height must not be 0");
         }
         this.origin = origin;
         this.width = width;
         this.height = height;
+        this.number = number;
+    }
+
+    Rectangle(Vector2D origin, int width, int height) {
+        this(origin, width, height, 1);
     }
 
     Rectangle(LinkedList<Vector2D> points) {

@@ -1,5 +1,3 @@
-package com.unitelabsrectanglechallenge;
-
 import java.security.InvalidParameterException;
 import java.util.Objects;
 

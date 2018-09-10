@@ -1,5 +1,3 @@
-package com.unitelabsrectanglechallenge;
-
 class RectangleFromIntersection extends Rectangle {
     Rectangle parent1;
     Rectangle parent2;

@@ -1,5 +1,4 @@
-package com.unitelabsrectanglechallenge;
-
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import java.security.InvalidParameterException;
@@ -11,9 +10,9 @@ class RectangleTest {
 
     @Test
     void Rectangle_WidthOrHeightEqualTo0_Expect_InvalidParameterException() {
-        assertThrows(InvalidParameterException.class, () -> new Rectangle(new Vector2D(0, 0), 0, 0));
-        assertThrows(InvalidParameterException.class, () -> new Rectangle(new Vector2D(0, 0), 1, 0));
-        assertThrows(InvalidParameterException.class, () -> new Rectangle(new Vector2D(0, 0), 0, 1));
+        Assertions.assertThrows(InvalidParameterException.class, () -> new Rectangle(new Vector2D(0, 0), 0, 0));
+        Assertions.assertThrows(InvalidParameterException.class, () -> new Rectangle(new Vector2D(0, 0), 1, 0));
+        Assertions.assertThrows(InvalidParameterException.class, () -> new Rectangle(new Vector2D(0, 0), 0, 1));
     }
 
     @Test
@@ -25,7 +24,7 @@ class RectangleTest {
         points.add(new Vector2D(0, 1));
 
         //Duplicate Entries should throw
-        assertThrows(InvalidParameterException.class, () -> new Rectangle(points));
+        Assertions.assertThrows(InvalidParameterException.class, () -> new Rectangle(points));
 
         //Sloped side should throw
         points.removeFirst();
@@ -33,7 +32,7 @@ class RectangleTest {
         points.add(new Vector2D(1, 1));
         points.add(new Vector2D(1, 2));
 
-        assertThrows(InvalidParameterException.class, () -> new Rectangle(points));
+        Assertions.assertThrows(InvalidParameterException.class, () -> new Rectangle(points));
     }
 
     @Test
@@ -138,7 +137,7 @@ class RectangleTest {
         points.add(new Vector2D(0, 0));
         points.add(new Vector2D(0, 1));
 
-        assertThrows(InvalidParameterException.class, () -> Rectangle.calculateFourthRectangleCornerFromThree(points));
+        Assertions.assertThrows(InvalidParameterException.class, () -> Rectangle.calculateFourthRectangleCornerFromThree(points));
     }
 
     @Test
