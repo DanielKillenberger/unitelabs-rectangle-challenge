@@ -22,7 +22,6 @@ public class RectanglesIntersections {
         Gson gson = new Gson();
 
         // Create 2d LinkedList where first dimension is the level of intersections
-        // (amount of rectangles intersecting)
         LinkedList<LinkedList<Rectangle>> rectangles= new LinkedList<>();
         int intersectionLevel = 0;
 
