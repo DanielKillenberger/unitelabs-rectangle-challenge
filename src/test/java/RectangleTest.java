@@ -121,6 +121,13 @@ class RectangleTest {
     }
 
     @Test
+    void CalculateIntersection_TwoEqualRectangles_Expect_IdenticalRectangle() {
+        Rectangle rec = new Rectangle(new Vector2D(0, 0), 2, 2);
+
+        assertEquals(rec, Rectangle.calculateIntersection(rec, rec));
+    }
+
+    @Test
     void CalculateIntersection_OneRectangleContainsOtherRectangle_Expect_OtherRectangle() {
         Rectangle rec = new Rectangle(new Vector2D(0, 0), 4, 4);
         Rectangle rec2 = new Rectangle(new Vector2D(1, 1), 2, 2);

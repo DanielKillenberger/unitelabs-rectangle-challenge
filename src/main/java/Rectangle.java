@@ -64,6 +64,10 @@ class Rectangle {
      * @return RectangleFromIntersection with both intersecting rectangles as parents
      */
     static RectangleFromIntersection calculateIntersection(Rectangle rectangle1, Rectangle rectangle2) {
+        if(rectangle1.equals(rectangle2)) {
+            return new RectangleFromIntersection(rectangle1, rectangle1, rectangle2);
+        }
+
         LinkedList<Vector2D> cornerPointsFrom2IntersectingWith1 = rectangle1.getIntersectingCornerPoints(rectangle2);
         LinkedList<Vector2D> cornerPointsFrom1IntersectingWith2 = rectangle2.getIntersectingCornerPoints(rectangle1);
 
