@@ -38,16 +38,10 @@ class Rectangle {
         int maxY = Math.min(rectangle1.getMaxY(), rectangle2.getMaxY());
 
         Vector2D potentialOrigin = new Vector2D(minX, minY);
-        int width;
-        int height;
-        if(!rectangle1.isPointInRectangle(potentialOrigin) && !rectangle2.isPointInRectangle(potentialOrigin)) {
-            return null;
-        }
-
-        width = maxX - minX;
-        height = maxY - minY;
-
-        if (width <= 0 || height <= 0) {
+        int width = maxX - minX;
+        int height = maxY - minY;
+        if((!rectangle1.isPointInRectangle(potentialOrigin) && !rectangle2.isPointInRectangle(potentialOrigin)) ||
+                width <= 0 || height <= 0) {
             return null;
         }
 
