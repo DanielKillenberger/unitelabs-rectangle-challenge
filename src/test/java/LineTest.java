@@ -62,7 +62,7 @@ class LineTest {
     }
 
     @Test
-    void IsPointOnLine_When_PointOnLine_Expect_0() {
+    void WhereIsPointRelativeToLine_When_PointOnLine_Expect_0() {
         Line horizontalLine = new Line(origin, new Vector2D(1, 0));
         assertEquals(0, horizontalLine.whereIsPointRelativeToLine(origin));
 
@@ -71,7 +71,7 @@ class LineTest {
     }
 
     @Test
-    void IsPointOnLine_When_PointOnPositiveSideOfLine_Expect_1() {
+    void WhereIsPointRelativeToLine_When_PointOnPositiveSideOfLine_Expect_1() {
         Line horizontalLine = new Line(origin, new Vector2D(1, 0));
         assertEquals(1, horizontalLine.whereIsPointRelativeToLine(new Vector2D(0, 1)));
 
@@ -80,7 +80,7 @@ class LineTest {
     }
 
     @Test
-    void IsPointOnLine_When_PointOnNegativeSideOfLine_Expect_negative_1() {
+    void WhereIsPointRelativeToLine_When_PointOnNegativeSideOfLine_Expect_negative_1() {
         Line horizontalLine = new Line(origin, new Vector2D(1, 0));
         assertEquals(-1, horizontalLine.whereIsPointRelativeToLine(new Vector2D(0, -1)));
 
