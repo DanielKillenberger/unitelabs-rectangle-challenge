@@ -30,12 +30,16 @@ class Rectangle {
         if(rectangle1.equals(rectangle2)) {
             return new RectangleFromIntersection(rectangle1, rectangle1, rectangle2);
         }
+        Point2D rec1Min = rectangle1.getMin();
+        Point2D rec1Max = rectangle1.getMax();
+        Point2D rec2Min = rectangle2.getMin();
+        Point2D rec2Max = rectangle2.getMax();
 
-        int minX = Math.max(rectangle1.getMinX(), rectangle2.getMinX());
-        int minY = Math.max(rectangle1.getMinY(), rectangle2.getMinY());
+        int minX = Math.max(rec1Min.x, rec2Min.x);
+        int minY = Math.max(rec1Min.y, rec2Min.y);
 
-        int maxX = Math.min(rectangle1.getMaxX(), rectangle2.getMaxX());
-        int maxY = Math.min(rectangle1.getMaxY(), rectangle2.getMaxY());
+        int maxX = Math.min(rec1Max.x, rec2Max.x);
+        int maxY = Math.min(rec1Max.y, rec2Max.y);
 
         Point2D potentialOrigin = new Point2D(minX, minY);
         int width = maxX - minX;
@@ -48,24 +52,16 @@ class Rectangle {
         return new RectangleFromIntersection(potentialOrigin, width, height, rectangle1, rectangle2 );
     }
 
-    private int getMinX() {
-        return origin.x;
+    private Point2D getMin() {
+        return origin;
     }
 
-    private int getMaxX() {
-        return  origin.x + width;
-    }
-
-    private int getMinY() {
-        return origin.y;
-    }
-
-    private int getMaxY() {
-        return origin.y + height;
+    private Point2D getMax() {
+        return  new Point2D(origin.x + width, origin.y+height);
     }
 
     boolean isPointInRectangle(Point2D point) {
-        return getMinX() <= point.x && point.x <= getMaxX() && getMinY() <= point.y && point.y <= getMaxY();
+        return getMin().x <= point.x && point.x <= getMax().x && getMin().y <= point.y && point.y <= getMax().y;
     }
 
     @Override
