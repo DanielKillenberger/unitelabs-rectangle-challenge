@@ -41,7 +41,7 @@ public class RectanglesIntersections {
         return rectangles;
     }
 
-    private static LinkedList<LinkedList<Rectangle>> calculateIntersections(LinkedList<Rectangle> rectangles) {
+    static LinkedList<LinkedList<Rectangle>> calculateIntersections(LinkedList<Rectangle> rectangles) {
         int intersectionLevel = 0;
         int intersectionRectangleCounter = 1;
 
