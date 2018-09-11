@@ -25,7 +25,6 @@ class Rectangle {
     }
 
     Rectangle(LinkedList<Vector2D> points) {
-
         if (points.size() > 4 || points.size() < 3) {
             throw new InvalidParameterException("Invalid amount of points - needs to be either 3 or 4");
         }
