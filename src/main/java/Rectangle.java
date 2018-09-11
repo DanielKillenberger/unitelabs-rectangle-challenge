@@ -9,7 +9,7 @@ class Rectangle {
 
     Rectangle(Vector2D origin, int width, int height, int number) {
         if (width <= 0 || height <= 0) {
-            throw new InvalidParameterException("Width and height must not be 0");
+            throw new InvalidParameterException("Width and height must be > 0");
         }
         this.origin = origin;
         this.width = width;
@@ -22,8 +22,8 @@ class Rectangle {
     }
 
     /**
-     * @param rectangle1
-     * @param rectangle2
+     * @param rectangle1 First rectangle to intersect with second
+     * @param rectangle2 Second Rectangle to intersect with first
      * @return RectangleFromIntersection with both intersecting rectangles as parents
      */
     static RectangleFromIntersection calculateIntersection(Rectangle rectangle1, Rectangle rectangle2) {
@@ -54,19 +54,19 @@ class Rectangle {
         return new RectangleFromIntersection(potentialOrigin, width, height, rectangle1, rectangle2 );
     }
 
-    int getMinX() {
+    private int getMinX() {
         return origin.x;
     }
 
-    int getMaxX() {
+    private int getMaxX() {
         return  origin.x + width;
     }
 
-    int getMinY() {
+    private int getMinY() {
         return origin.y;
     }
 
-    int getMaxY() {
+    private int getMaxY() {
         return origin.y + height;
     }
 
