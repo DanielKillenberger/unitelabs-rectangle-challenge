@@ -91,7 +91,6 @@ public class RectanglesIntersections {
             System.out.println("Path to json file as argument required - terminating");
             System.exit(1);
         }
-        // Create 2d LinkedList where first dimension is the level of intersections
         LinkedList<Rectangle> rectangles = new LinkedList<>();
 
         try {
