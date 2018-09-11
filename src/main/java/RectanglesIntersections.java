@@ -41,28 +41,13 @@ public class RectanglesIntersections {
         return rectangles;
     }
 
-    public static void main(String[] args) throws InvalidParameterException, JsonSyntaxException {
-        // Create 2d LinkedList where first dimension is the level of intersections
-        LinkedList<LinkedList<Rectangle>> rectangles = new LinkedList<>();
+    private static LinkedList<LinkedList<Rectangle>> calculateIntersections(LinkedList<Rectangle> rectangles) {
         int intersectionLevel = 0;
-
-        if (args[0] == null) {
-            throw new InvalidParameterException("Path to json file as argument required");
-        }
-
-        try {
-            rectangles.add(parseRectanglesFromJson(args[0]));
-        } catch (InvalidParameterException | JsonSyntaxException e) {
-            System.out.println(e.getMessage());
-            System.exit(1);
-        }
-
-        System.out.println("Input:");
-        for (var rec : rectangles.get(intersectionLevel)) {
-            System.out.println(rec);
-        }
-
         int intersectionRectangleCounter = 1;
+
+        LinkedList<LinkedList<Rectangle>> intersectionRectangles = new LinkedList<>();
+        // Add nonIntersected rectangles for simpler loop. Remove at the end.
+        intersectionRectangles.add(rectangles);
 
         /*
         On each level we intersect each rectangle in that list with every other one.
@@ -71,36 +56,60 @@ public class RectanglesIntersections {
         While loop terminates when no new level has been added to the 2d LinkedList
         in one complete iteration meaning no more additional intersections.
          */
-        while (rectangles.size() - 1 == intersectionLevel) {
+        while (intersectionRectangles.size() - 1 == intersectionLevel) {
             ++intersectionLevel;
-            for (int i = 0; i < rectangles.get(intersectionLevel - 1).size() - 1; ++i) {
-                for (int j = i + 1; j < rectangles.get(intersectionLevel - 1).size(); j++) {
+            for (int i = 0; i < intersectionRectangles.get(intersectionLevel - 1).size() - 1; ++i) {
+                for (int j = i + 1; j < intersectionRectangles.get(intersectionLevel - 1).size(); ++j) {
                     RectangleFromIntersection result = Rectangle.calculateIntersection(
-                            rectangles.get(intersectionLevel - 1).get(i),
-                            rectangles.get(intersectionLevel - 1).get(j));
+                            intersectionRectangles.get(intersectionLevel - 1).get(i),
+                            intersectionRectangles.get(intersectionLevel - 1).get(j));
                     if (result != null) {
-                        if (rectangles.size() == intersectionLevel) {
-                            rectangles.add(new LinkedList<>());
+                        if (intersectionRectangles.size() == intersectionLevel) {
+                            intersectionRectangles.add(new LinkedList<>());
                         }
                         LinkedList<Rectangle> parents = result.getParents();
                         // Check if there are no other rectangles with same parents
                         // (Different permutation of same intersection)
                         // If so add the rectangle
-                        if (new LinkedList<>(rectangles.get(intersectionLevel)).stream().noneMatch(rectangle -> {
+                        if (new LinkedList<>(intersectionRectangles.get(intersectionLevel)).stream().noneMatch(rectangle -> {
                             var r = (RectangleFromIntersection) rectangle;
                             return r.getParents().equals(parents);
                         })) {
                             result.number = intersectionRectangleCounter++;
-                            rectangles.get(intersectionLevel).add(result);
+                            intersectionRectangles.get(intersectionLevel).add(result);
                         }
                     }
                 }
             }
         }
+        intersectionRectangles.removeFirst();
+        return intersectionRectangles;
+    }
+
+    public static void main(String[] args) throws InvalidParameterException, JsonSyntaxException {
+        if (args[0] == null) {
+            System.out.println("Path to json file as argument required - terminating");
+            System.exit(1);
+        }
+        // Create 2d LinkedList where first dimension is the level of intersections
+        LinkedList<Rectangle> rectangles = new LinkedList<>();
+
+        try {
+            rectangles = (parseRectanglesFromJson(args[0]));
+        } catch (InvalidParameterException | JsonSyntaxException e) {
+            System.out.println(e.getMessage());
+            System.exit(1);
+        }
+
+        System.out.println("Input:");
+        for (var rec : rectangles) {
+            System.out.println(rec);
+        }
+
+        LinkedList<LinkedList<Rectangle>> intersectionRectangles = calculateIntersections(rectangles);
 
         System.out.println("\nOutput:");
-        for (int i = 1; i < rectangles.size(); ++i) {
-            var level = rectangles.get(i);
+        for (var level : intersectionRectangles) {
             for (var rec : level) {
                 System.out.println(rec);
             }
