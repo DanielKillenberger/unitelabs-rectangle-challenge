@@ -87,7 +87,7 @@ public class RectanglesIntersections {
     }
 
     public static void main(String[] args) throws InvalidParameterException, JsonSyntaxException {
-        if (args[0] == null) {
+        if (args.length == 0) {
             System.out.println("Path to json file as argument required - terminating");
             System.exit(1);
         }
