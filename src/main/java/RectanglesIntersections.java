@@ -30,7 +30,7 @@ public class RectanglesIntersections {
             int counter = 1;
             for (var rec : data.recs) {
                 if (rec != null) {
-                    rectangles.add(new Rectangle(new Vector2D(rec.x, rec.y), rec.w, rec.h, counter++));
+                    rectangles.add(new Rectangle(new Point2D(rec.x, rec.y), rec.w, rec.h, counter++));
                 }
             }
         } catch (FileNotFoundException e) {

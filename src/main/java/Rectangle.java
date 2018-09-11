@@ -3,11 +3,11 @@ import java.util.*;
 
 
 class Rectangle {
-    final Vector2D origin;
+    final Point2D origin;
     final int width, height;
     int number;
 
-    Rectangle(Vector2D origin, int width, int height, int number) {
+    Rectangle(Point2D origin, int width, int height, int number) {
         if (width <= 0 || height <= 0) {
             throw new InvalidParameterException("Width and height must be > 0");
         }
@@ -17,7 +17,7 @@ class Rectangle {
         this.number = number;
     }
 
-    Rectangle(Vector2D origin, int width, int height) {
+    Rectangle(Point2D origin, int width, int height) {
         this(origin, width, height, 1);
     }
 
@@ -37,7 +37,7 @@ class Rectangle {
         int maxX = Math.min(rectangle1.getMaxX(), rectangle2.getMaxX());
         int maxY = Math.min(rectangle1.getMaxY(), rectangle2.getMaxY());
 
-        Vector2D potentialOrigin = new Vector2D(minX, minY);
+        Point2D potentialOrigin = new Point2D(minX, minY);
         int width = maxX - minX;
         int height = maxY - minY;
         if((!rectangle1.isPointInRectangle(potentialOrigin) && !rectangle2.isPointInRectangle(potentialOrigin)) ||
@@ -64,7 +64,7 @@ class Rectangle {
         return origin.y + height;
     }
 
-    boolean isPointInRectangle(Vector2D point) {
+    boolean isPointInRectangle(Point2D point) {
         return getMinX() <= point.x && point.x <= getMaxX() && getMinY() <= point.y && point.y <= getMaxY();
     }
 
