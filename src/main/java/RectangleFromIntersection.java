@@ -16,12 +16,8 @@ class RectangleFromIntersection extends Rectangle {
         this(rectangle.origin, rectangle.width, rectangle.height, parent1, parent2);
     }
 
-    LinkedList<Rectangle> getParents() {
-        return getParents(this, new LinkedList<>());
-    }
-
-    LinkedList<Rectangle> getParents(Rectangle rectangle,
-                                     LinkedList<Rectangle> parents) {
+    static LinkedList<Rectangle> getParents(Rectangle rectangle,
+                                            LinkedList<Rectangle> parents) {
         if (rectangle instanceof RectangleFromIntersection) {
             RectangleFromIntersection r = (RectangleFromIntersection) rectangle;
             parents = getParents(r.parent1, parents);
@@ -33,6 +29,10 @@ class RectangleFromIntersection extends Rectangle {
             parents.sort(Comparator.comparingInt(rectangle2 -> rectangle2.number));
             return parents;
         }
+    }
+
+    LinkedList<Rectangle> getParents() {
+        return getParents(this, new LinkedList<>());
     }
 
     @Override
