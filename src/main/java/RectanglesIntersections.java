@@ -71,7 +71,7 @@ public class RectanglesIntersections {
                         // Check if there are no other rectangles with same parents
                         // (Different permutation of same intersection)
                         // If so add the rectangle
-                        if (new LinkedList<>(intersectionRectangles.get(intersectionLevel)).stream().noneMatch(rectangle -> {
+                        if (intersectionRectangles.get(intersectionLevel).stream().noneMatch(rectangle -> {
                             var r = (RectangleFromIntersection) rectangle;
                             return r.getParents().equals(parents);
                         })) {
