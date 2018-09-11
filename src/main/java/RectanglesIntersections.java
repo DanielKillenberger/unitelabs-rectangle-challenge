@@ -84,11 +84,11 @@ public class RectanglesIntersections {
         }
         intersectionRectangles.removeFirst();
 
-        LinkedList<Rectangle> intersectionList = new LinkedList<>();
+        LinkedList<Rectangle> flattenedIntersections = new LinkedList<>();
         for(var list : intersectionRectangles) {
-            intersectionList.addAll(list);
+            flattenedIntersections.addAll(list);
         }
-        return intersectionList;
+        return flattenedIntersections;
     }
 
     public static void main(String[] args) throws InvalidParameterException, JsonSyntaxException {
