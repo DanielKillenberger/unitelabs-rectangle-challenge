@@ -41,7 +41,7 @@ public class RectanglesIntersections {
         return rectangles;
     }
 
-    static LinkedList<LinkedList<Rectangle>> calculateIntersections(LinkedList<Rectangle> rectangles) {
+    static LinkedList<Rectangle> calculateIntersections(LinkedList<Rectangle> rectangles) {
         int intersectionLevel = 0;
         int intersectionRectangleCounter = 1;
 
@@ -83,7 +83,12 @@ public class RectanglesIntersections {
             }
         }
         intersectionRectangles.removeFirst();
-        return intersectionRectangles;
+
+        LinkedList<Rectangle> intersectionList = new LinkedList<>();
+        for(var list : intersectionRectangles) {
+            intersectionList.addAll(list);
+        }
+        return intersectionList;
     }
 
     public static void main(String[] args) throws InvalidParameterException, JsonSyntaxException {
@@ -105,13 +110,11 @@ public class RectanglesIntersections {
             System.out.println(rec);
         }
 
-        LinkedList<LinkedList<Rectangle>> intersectionRectangles = calculateIntersections(rectangles);
+        LinkedList<Rectangle> intersectionRectangles = calculateIntersections(rectangles);
 
         System.out.println("\nOutput:");
-        for (var level : intersectionRectangles) {
-            for (var rec : level) {
-                System.out.println(rec);
-            }
+        for (var rec : intersectionRectangles) {
+            System.out.println(rec);
         }
     }
 }
