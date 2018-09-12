@@ -13,7 +13,7 @@ The following will run all tests, compile the class files and
 build a jar with all dependencies.
 ### Prerequisites
 
-Java jdk installed
+Java 10.0 jdk installed
 #### Unix
 
 Cd into the working directory and execute the gradlew script 
