@@ -10,114 +10,34 @@ import java.util.LinkedList;
 import java.util.stream.Stream;
 
 public class RectanglesIntersections {
-    static class JsonRectangle {
-        int x, y, w, h;
-        boolean xSet;
-        boolean ySet;
-        boolean wSet;
-        boolean hSet;
 
-        public boolean isXSet() {
-            return xSet;
-        }
-
-        public boolean isYSet() {
-            return ySet;
-        }
-
-        public boolean isWSet() {
-            return wSet;
-        }
-
-        public boolean isHSet() {
-            return hSet;
-        }
-
-        public int getX() {
-            return x;
-        }
-
-        public void setX(int x) {
-            this.x = x;
-            xSet = true;
-        }
-
-        public int getY() {
-            return y;
-        }
-
-        public void setY(int y) {
-            this.y = y;
-            ySet = true;
-        }
-
-        public int getW() {
-            return w;
-        }
-
-        public void setW(int w) {
-            this.w = w;
-            wSet = true;
-        }
-
-        public int getH() {
-            return h;
-        }
-
-        public void setH(int h) {
-            this.h = h;
-            hSet = true;
-        }
-    }
-
-    static class JsonWrapperObject {
-        JsonRectangle[] recs;
-
-        public JsonRectangle[] getRecs() {
-            return recs;
-        }
-    }
-
-    private static String readFile(String filePath)
-    {
+    private static String readFile(String filePath) throws IOException {
         StringBuilder contentBuilder = new StringBuilder();
-        try (Stream<String> stream = Files.lines( Paths.get(filePath), StandardCharsets.UTF_8))
-        {
-            stream.forEach(s -> contentBuilder.append(s).append("\n"));
-        }
-        catch (IOException e)
-        {
-            e.printStackTrace();
-            System.exit(1);
-        }
+        Stream<String> stream = Files.lines(Paths.get(filePath), StandardCharsets.UTF_8);
+        stream.forEach(s -> contentBuilder.append(s).append("\n"));
+
         return contentBuilder.toString();
     }
 
 
-    static LinkedList<Rectangle> parseRectanglesFromJsonString(String jsonString) {
+    static LinkedList<Rectangle> parseRectanglesFromJsonString(String jsonString) throws IOException {
         ObjectMapper mapper = new ObjectMapper();
         LinkedList<Rectangle> rectangles = new LinkedList<>();
-        try {
-            JsonWrapperObject data = mapper.readValue(jsonString, JsonWrapperObject.class);
-            int counter = 1;
-
-            for (var rec : data.recs) {
-                if (rec != null) {
-                    if(rec.isWSet() && rec.isHSet() && rec.isXSet() && rec.isYSet()) {
-                        rectangles.add(new Rectangle(new Point2D(rec.x, rec.y), rec.w, rec.h, counter++));
-                    } else {
-                        System.out.println("Not adding ill defined rectangle");
-                    }
+        JsonWrapperObject data = mapper.readValue(jsonString, JsonWrapperObject.class);
+        int counter = 1;
+        for (var rec : data.recs) {
+            if (rec != null) {
+                if (rec.isWSet() && rec.isHSet() && rec.isXSet() && rec.isYSet()) {
+                    rectangles.add(new Rectangle(new Point2D(rec.x, rec.y), rec.w, rec.h, counter++));
+                } else {
+                    System.out.println("Not adding ill defined rectangle");
                 }
             }
-        } catch (IOException e) {
-            e.printStackTrace();
-            System.exit(1);
         }
         return rectangles;
     }
 
-    static LinkedList<Rectangle> parseRectanglesFromJsonFile(String filename){
+    static LinkedList<Rectangle> parseRectanglesFromJsonFile(String filename) throws IOException{
         String filePath = new File("").getAbsolutePath();
         filePath += "/" + filename;
 
@@ -180,11 +100,22 @@ public class RectanglesIntersections {
             System.exit(1);
         }
 
-        LinkedList<Rectangle> rectangles = (parseRectanglesFromJsonFile(args[0]));
+        LinkedList<Rectangle> rectangles = null;
+        try {
+            rectangles = (parseRectanglesFromJsonFile(args[0]));
+        } catch (IOException e) {
+            e.printStackTrace();
+            System.exit(1);
+        }
 
-        System.out.println("\nInput:");
-        for (var rec : rectangles) {
-            System.out.println(rec);
+        if (rectangles == null) {
+            System.out.println("Received no valid input rectangles");
+            System.exit(1);
+        } else {
+            System.out.println("\nInput:");
+            for (var rec : rectangles) {
+                System.out.println(rec);
+            }
         }
 
         LinkedList<Rectangle> intersectionRectangles = calculateIntersections(rectangles);
