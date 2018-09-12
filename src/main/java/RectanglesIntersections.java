@@ -22,7 +22,6 @@ public class RectanglesIntersections {
             return xSet;
         }
 
-
         public boolean isYSet() {
             return ySet;
         }
@@ -35,13 +34,6 @@ public class RectanglesIntersections {
             return hSet;
         }
 
-        public void setwSet(boolean wSet) {
-            this.wSet = wSet;
-        }
-
-        public void sethSet(boolean hSet) {
-            this.hSet = hSet;
-        }
         public int getX() {
             return x;
         }
