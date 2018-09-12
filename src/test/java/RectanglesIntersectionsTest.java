@@ -9,7 +9,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class RectanglesIntersectionsTest {
     @Test
-    void ParseRectanglesFromJsonString_UnknownField_Expect_JsonParseException() {
+    void ParseRectanglesFromJsonString_UnknownField_Expect_UnrecognizedPropertyException() {
         String json = "{\r\n  \"recs\": [\r\n    {\"x\": 100, \"t\": 100, \"y\": 100, \"w\": 250, \"h\": 80},\r\n    " +
                 "{\"x\": 120, \"y\": 200, \"w\": 250, \"h\": 150},\r\n    " +
                 "{\"x\": 140, \"y\": 160, \"w\": 250, \"h\": 100},\r\n    " +
