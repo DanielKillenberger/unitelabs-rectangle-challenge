@@ -1,44 +1,115 @@
-import com.google.gson.Gson;
-import com.google.gson.JsonSyntaxException;
-import com.google.gson.stream.JsonReader;
+import com.fasterxml.jackson.annotation.JsonView;
+import com.fasterxml.jackson.core.JsonParseException;
+import com.fasterxml.jackson.databind.JsonMappingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.FileReader;
 
+import java.io.IOException;
 import java.security.InvalidParameterException;
 import java.util.LinkedList;
 
 public class RectanglesIntersections {
-    private class JsonRectangle {
+    static class JsonRectangle {
         int x, y, w, h;
+        boolean xSet;
+        boolean ySet;
+        boolean wSet;
+        boolean hSet;
+
+        public boolean isXSet() {
+            return xSet;
+        }
+
+
+        public boolean isYSet() {
+            return ySet;
+        }
+
+        public boolean isWSet() {
+            return wSet;
+        }
+
+        public boolean isHSet() {
+            return hSet;
+        }
+
+        public void setwSet(boolean wSet) {
+            this.wSet = wSet;
+        }
+
+        public void sethSet(boolean hSet) {
+            this.hSet = hSet;
+        }
+        public int getX() {
+            return x;
+        }
+
+        public void setX(int x) {
+            this.x = x;
+            xSet = true;
+        }
+
+        public int getY() {
+            return y;
+        }
+
+        public void setY(int y) {
+            this.y = y;
+            ySet = true;
+        }
+
+        public int getW() {
+            return w;
+        }
+
+        public void setW(int w) {
+            this.w = w;
+            wSet = true;
+        }
+
+        public int getH() {
+            return h;
+        }
+
+        public void setH(int h) {
+            this.h = h;
+            hSet = true;
+        }
     }
 
-    private class JsonWrapperObject {
+    static class JsonWrapperObject {
         JsonRectangle[] recs;
+
+        public JsonRectangle[] getRecs() {
+            return recs;
+        }
     }
 
-    private static LinkedList<Rectangle> parseRectanglesFromJson(String filename) {
-        Gson gson = new Gson();
-        LinkedList<Rectangle> rectangles = new LinkedList<>();
+    private static LinkedList<Rectangle> parseRectanglesFromJson(String filename)
+            throws IOException {
+        ObjectMapper mapper = new ObjectMapper();
+        String filePath = new File("").getAbsolutePath();
+        filePath += "/" + filename;
         try {
-            String filePath = new File("").getAbsolutePath();
-            filePath += "/" + filename;
-            JsonReader reader = new JsonReader(new FileReader(filePath));
-            JsonWrapperObject data = gson.fromJson(reader, JsonWrapperObject.class);
-
+            JsonWrapperObject data = mapper.readValue(new File(filePath), JsonWrapperObject.class);
             int counter = 1;
+            LinkedList<Rectangle> rectangles = new LinkedList<>();
             for (var rec : data.recs) {
                 if (rec != null) {
-                    rectangles.add(new Rectangle(new Point2D(rec.x, rec.y), rec.w, rec.h, counter++));
+                    if(rec.isWSet() && rec.isHSet() && rec.isXSet() && rec.isYSet()) {
+                        rectangles.add(new Rectangle(new Point2D(rec.x, rec.y), rec.w, rec.h, counter++));
+                    } else {
+                        System.out.println("Not adding ill defined rectangle");
+                    }
                 }
             }
+            return rectangles;
         } catch (FileNotFoundException e) {
             throw new InvalidParameterException("Given parameter is not a valid file path - terminating");
-        } catch (JsonSyntaxException e) {
-            throw new JsonSyntaxException("Badly formatted json file - terminating");
         }
-        return rectangles;
+
     }
 
     static LinkedList<Rectangle> calculateIntersections(LinkedList<Rectangle> rectangles) {
@@ -85,13 +156,13 @@ public class RectanglesIntersections {
         intersectionRectangles.removeFirst();
 
         LinkedList<Rectangle> flattenedIntersections = new LinkedList<>();
-        for(var list : intersectionRectangles) {
+        for (var list : intersectionRectangles) {
             flattenedIntersections.addAll(list);
         }
         return flattenedIntersections;
     }
 
-    public static void main(String[] args) throws InvalidParameterException, JsonSyntaxException {
+    public static void main(String[] args) throws InvalidParameterException {
         if (args.length == 0) {
             System.out.println("Path to json file as argument required - terminating");
             System.exit(1);
@@ -100,12 +171,12 @@ public class RectanglesIntersections {
 
         try {
             rectangles = (parseRectanglesFromJson(args[0]));
-        } catch (InvalidParameterException | JsonSyntaxException e) {
+        } catch (InvalidParameterException | IOException e) {
             System.out.println(e.getMessage());
             System.exit(1);
         }
 
-        System.out.println("Input:");
+        System.out.println("\nInput:");
         for (var rec : rectangles) {
             System.out.println(rec);
         }
