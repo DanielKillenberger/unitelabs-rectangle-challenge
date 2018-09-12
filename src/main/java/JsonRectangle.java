@@ -1,23 +1,23 @@
 public class JsonRectangle {
     int x, y, w, h;
-    boolean xSet;
-    boolean ySet;
-    boolean wSet;
-    boolean hSet;
+    private boolean xSet;
+    private boolean ySet;
+    private boolean wSet;
+    private boolean hSet;
 
-    public boolean isXSet() {
+    boolean isXSet() {
         return xSet;
     }
 
-    public boolean isYSet() {
+    boolean isYSet() {
         return ySet;
     }
 
-    public boolean isWSet() {
+    boolean isWSet() {
         return wSet;
     }
 
-    public boolean isHSet() {
+    boolean isHSet() {
         return hSet;
     }
 
