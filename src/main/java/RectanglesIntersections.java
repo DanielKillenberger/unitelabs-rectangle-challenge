@@ -1,14 +1,14 @@
-import com.fasterxml.jackson.annotation.JsonView;
-import com.fasterxml.jackson.core.JsonParseException;
-import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.security.InvalidParameterException;
 import java.util.LinkedList;
+import java.util.stream.Stream;
 
 public class RectanglesIntersections {
     static class JsonRectangle {
@@ -79,15 +79,29 @@ public class RectanglesIntersections {
         }
     }
 
-    private static LinkedList<Rectangle> parseRectanglesFromJson(String filename)
-            throws IOException {
+    private static String readFile(String filePath)
+    {
+        StringBuilder contentBuilder = new StringBuilder();
+        try (Stream<String> stream = Files.lines( Paths.get(filePath), StandardCharsets.UTF_8))
+        {
+            stream.forEach(s -> contentBuilder.append(s).append("\n"));
+        }
+        catch (IOException e)
+        {
+            e.printStackTrace();
+            System.exit(1);
+        }
+        return contentBuilder.toString();
+    }
+
+
+    static LinkedList<Rectangle> parseRectangleFromJsonString(String jsonString) {
         ObjectMapper mapper = new ObjectMapper();
-        String filePath = new File("").getAbsolutePath();
-        filePath += "/" + filename;
+        LinkedList<Rectangle> rectangles = new LinkedList<>();
         try {
-            JsonWrapperObject data = mapper.readValue(new File(filePath), JsonWrapperObject.class);
+            JsonWrapperObject data = mapper.readValue(jsonString, JsonWrapperObject.class);
             int counter = 1;
-            LinkedList<Rectangle> rectangles = new LinkedList<>();
+
             for (var rec : data.recs) {
                 if (rec != null) {
                     if(rec.isWSet() && rec.isHSet() && rec.isXSet() && rec.isYSet()) {
@@ -97,11 +111,18 @@ public class RectanglesIntersections {
                     }
                 }
             }
-            return rectangles;
-        } catch (FileNotFoundException e) {
-            throw new InvalidParameterException("Given parameter is not a valid file path - terminating");
+        } catch (IOException e) {
+            e.printStackTrace();
+            System.exit(1);
         }
+        return rectangles;
+    }
 
+    static LinkedList<Rectangle> parseRectanglesFromJsonFile(String filename){
+        String filePath = new File("").getAbsolutePath();
+        filePath += "/" + filename;
+
+        return parseRectangleFromJsonString(readFile(filePath));
     }
 
     static LinkedList<Rectangle> calculateIntersections(LinkedList<Rectangle> rectangles) {
@@ -162,7 +183,7 @@ public class RectanglesIntersections {
         LinkedList<Rectangle> rectangles = new LinkedList<>();
 
         try {
-            rectangles = (parseRectanglesFromJson(args[0]));
+            rectangles = (parseRectanglesFromJsonFile(args[0]));
         } catch (InvalidParameterException | IOException e) {
             System.out.println(e.getMessage());
             System.exit(1);
