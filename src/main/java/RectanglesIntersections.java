@@ -6,7 +6,6 @@ import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.security.InvalidParameterException;
 import java.util.LinkedList;
 import java.util.stream.Stream;
 
@@ -175,19 +174,13 @@ public class RectanglesIntersections {
         return flattenedIntersections;
     }
 
-    public static void main(String[] args) throws InvalidParameterException {
+    public static void main(String[] args) {
         if (args.length == 0) {
             System.out.println("Path to json file as argument required - terminating");
             System.exit(1);
         }
-        LinkedList<Rectangle> rectangles = new LinkedList<>();
 
-        try {
-            rectangles = (parseRectanglesFromJsonFile(args[0]));
-        } catch (InvalidParameterException | IOException e) {
-            System.out.println(e.getMessage());
-            System.exit(1);
-        }
+        LinkedList<Rectangle> rectangles = (parseRectanglesFromJsonFile(args[0]));
 
         System.out.println("\nInput:");
         for (var rec : rectangles) {
