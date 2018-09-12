@@ -94,7 +94,7 @@ public class RectanglesIntersections {
     }
 
 
-    static LinkedList<Rectangle> parseRectangleFromJsonString(String jsonString) {
+    static LinkedList<Rectangle> parseRectanglesFromJsonString(String jsonString) {
         ObjectMapper mapper = new ObjectMapper();
         LinkedList<Rectangle> rectangles = new LinkedList<>();
         try {
@@ -121,7 +121,7 @@ public class RectanglesIntersections {
         String filePath = new File("").getAbsolutePath();
         filePath += "/" + filename;
 
-        return parseRectangleFromJsonString(readFile(filePath));
+        return parseRectanglesFromJsonString(readFile(filePath));
     }
 
     static LinkedList<Rectangle> calculateIntersections(LinkedList<Rectangle> rectangles) {
